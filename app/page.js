@@ -1,101 +1,122 @@
-import Image from "next/image";
+"use client";
+import Card from "./components/Card";
+import NavBar from "./components/NavBar";
+import BlurText from "./components/BlurText";
+import Clock from "./components/Widgets/Clock";
+import Music from "./components/Widgets/Music";
+import Mbti from "./components/Widgets/Mbti";
+import Quote from "./components/Widgets/Quote";
+import Age from "./components/Widgets/Age";
+import Routine from "./components/Widgets/Routine";
+import Photo from "./components/Widgets/Photo";
+import Github from "./components/Widgets/Github";
+import Solvedac from "./components/Widgets/Solvedac";
+import Hobby from "./components/Widgets/Hobby";
+import Media from "./components/Widgets/Media";
+import SkillSet from "./components/Widgets/SkillSet";
+import Navy from "./components/Widgets/Navy";
+import History from "./components/Widgets/History";
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      <NavBar activeTab={0} />
+      <main className="min-h-screen pt-16 px-6 pb-24 relative">
+        <div className="max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
+          <BlurText
+            text="안녕하세요🖐️"
+            delay={150}
+            animateBy="words"
+            direction="top"
+            className="text-3xl font-black opacity-90 mb-1"
+          />
+          <BlurText
+            text="저는 윤태인입니다."
+            delay={150}
+            animateBy="words"
+            direction="top"
+            className="text-3xl font-black opacity-90 mb-4"
+          />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+
+          <div className="flex space-x-4 mb-8">
+            <a href="https://github.com/icecream0910"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-medium text-gray-500 hover:text-gray-400"
+            > Github </a>
+            <a href="https://blog.yuntae.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-medium text-gray-500 hover:text-gray-400"
+            > Blog </a>
+            <a href="mailto:hey@yuntae.in"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-lg font-medium text-gray-500 hover:text-gray-400"
+            > Email </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card size="1x1">
+              <Hobby />
+            </Card>
+
+            <Card size="1x1">
+              <Music />
+            </Card>
+
+            <Card size="1x1">
+              <SkillSet />
+            </Card>
+
+            <Card size="1x1">
+              <Clock />
+            </Card>
+
+            <Card size="1x1">
+              <Age />
+            </Card>
+
+            <Card size="1x1">
+              <Photo />
+            </Card>
+
+            <Card size="1x1">
+              <Mbti />
+            </Card>
+
+            <Card size="1x1">
+              <Media />
+            </Card>
+
+            <Card size="1x1">
+              <Quote />
+            </Card>
+
+            <Card size="1x1">
+              <Github />
+            </Card>
+
+            <Card size="1x1">
+              <Solvedac />
+            </Card>
+
+            <Card size="1x1">
+              <Routine />
+            </Card>
+
+            <Card size="1x1">
+              <Navy />
+            </Card>
+
+            <Card size="2x1">
+              <History />
+            </Card>
+
+          </div>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }
