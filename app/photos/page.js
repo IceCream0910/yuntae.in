@@ -9,6 +9,18 @@ import { Suspense } from "react";
 
 const images = [
     {
+        id: 250210,
+        title: "불",
+        url: "https://i.imgur.com/7T6DpwL.png",
+        location: "가평, South Korea",
+        camera: "samsung Galaxy S23",
+        focal: "7.00mm",
+        aperture: "f/2.4",
+        shutter: "1/359",
+        iso: "ISO 100",
+        date: "Feb 10, 2025"
+    },
+    {
         id: 0,
         title: "7호선 뷰",
         url: "https://i.imgur.com/Bn4gnng.jpeg",
@@ -43,6 +55,18 @@ const images = [
         shutter: "1/586",
         iso: "ISO 25",
         date: "Jan 15, 2024"
+    },
+    {
+        id: 240118,
+        title: "기찻길",
+        url: "https://i.imgur.com/Sx1F4cH.jpeg",
+        location: "Fukuoka, Japan",
+        camera: "samsung Galaxy S23",
+        focal: "5.4mm",
+        aperture: "f/1.8",
+        shutter: "1/427",
+        iso: "ISO 25",
+        date: "Jan 14, 2024"
     },
     {
         id: 3,
@@ -122,6 +146,7 @@ function Photos() {
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-x-4 lg:gap-x-6 gap-y-8">
                             <div className="col-span-1 md:col-span-9">
                                 <img
+                                    loading="lazy"
                                     className="w-full h-auto"
                                     src={image.url}
                                     alt={image.title}

@@ -36,7 +36,7 @@ export default function History() {
                     <button
                         onClick={() => setActiveTab('education')}
                         className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${activeTab === 'education'
-                            ? 'bg-white text-[var(--background)] shadow-sm'
+                            ? 'bg-black/70 dark:bg-white text-[var(--background)] shadow-sm'
                             : 'text-[var(--foreground)]/70'
                             }`}
                     >
@@ -45,7 +45,7 @@ export default function History() {
                     <button
                         onClick={() => setActiveTab('certification')}
                         className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${activeTab === 'certification'
-                            ? 'bg-white text-[var(--background)] shadow-sm'
+                            ? 'bg-black/70 dark:bg-white text-[var(--background)] shadow-sm'
                             : 'text-[var(--foreground)]/70'
                             }`}
                     >

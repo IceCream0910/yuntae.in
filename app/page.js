@@ -87,10 +87,6 @@ export default function Home() {
             </Card>
 
             <Card size="1x1">
-              <Media />
-            </Card>
-
-            <Card size="1x1">
               <Quote />
             </Card>
 

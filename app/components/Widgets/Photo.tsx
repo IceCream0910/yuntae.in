@@ -16,7 +16,6 @@ const images = [
 export default function Photo() {
     const containerRef = useRef<HTMLDivElement>(null);
     const [dimensions, setDimensions] = useState({ width: 150, height: 150 });
-    const [currentCard, setCurrentCard] = useState(0);
 
     useEffect(() => {
         const updateDimensions = () => {
@@ -39,7 +38,7 @@ export default function Photo() {
                 <span className='emoji'>📷</span> 직접 찍은 사진</span>
             <h2 className="relative text-3xl font-black break-keep text-pretty -mt-1 mb-4">
                 <motion.span layoutId='page-title'>Photos</motion.span>
-                <Link href={`/photos?focus=${currentCard}`}>
+                <Link href={`/photos`}>
                     <button className="absolute -top-5 right-0 bg-black/15 dark:bg-black/50 flex items-center justify-center rounded-full p-2 hover:bg-black/30 dark:hover:bg-black/30">
                         <IonIcon name="add" className="text-[var(--foreground)] text-xl" />
                     </button>
@@ -54,7 +53,7 @@ export default function Photo() {
                     sendToBackOnClick={true}
                     cardDimensions={dimensions}
                     cardsData={images}
-                    onChange={useRef((id: number) => setCurrentCard(id)).current}
+                    onChange={() => { }}
                 /></div>
 
         </div>
