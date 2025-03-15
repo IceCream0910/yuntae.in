@@ -22,7 +22,7 @@ const Music = () => {
                 const { data } = await response.json();
                 const track = data[0].attributes;
 
-                const artworkUrl = track.artwork.url.replace('{w}x{h}', '500x500');
+                const artworkUrl = track.artwork.url.replace('{w}x{h}', '400x400');
                 const colors = await prominent(artworkUrl, { amount: 1 });
                 const [r, g, b] = Array.isArray(colors[0]) ? colors[0] : [0, 0, 0];
 

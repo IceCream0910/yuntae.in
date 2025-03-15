@@ -9,6 +9,66 @@ import { Suspense } from "react";
 
 const images = [
     {
+        id: 250312,
+        title: "비 온 뒤 맑음",
+        url: "https://i.imgur.com/mXhmYRh.jpeg",
+        location: "Shizuoka, Japan",
+        camera: "samsung Galaxy S23",
+        focal: "5.4mm",
+        aperture: "f/1.8",
+        shutter: "1/219",
+        iso: "ISO 25",
+        date: "Mar 12, 2025"
+    },
+    {
+        id: 250309,
+        title: "강 위 기찻길",
+        url: "https://i.imgur.com/iXxCE3G.jpeg",
+        location: "Tokyo, Japan",
+        camera: "samsung Galaxy S23",
+        focal: "7.00mm",
+        aperture: "f/2.4",
+        shutter: "1/2701",
+        iso: "ISO 25",
+        date: "Mar 9, 2025"
+    },
+    {
+        id: 250308,
+        title: "해질녘 도시",
+        url: "https://i.imgur.com/a7eOkZz.jpeg",
+        location: "Tokyo, Japan",
+        camera: "samsung Galaxy S23",
+        focal: "7.00mm",
+        aperture: "f/2.4",
+        shutter: "1/60",
+        iso: "ISO 50",
+        date: "Mar 8, 2025"
+    },
+    {
+        id: 250307,
+        title: "도쿄의 밤",
+        url: "https://i.imgur.com/lADbuOB.jpeg",
+        location: "Tokyo, Japan",
+        camera: "samsung Galaxy S23",
+        focal: "7.00mm",
+        aperture: "f/2.4",
+        shutter: "1/60",
+        iso: "ISO 400",
+        date: "Mar 7, 2025"
+    },
+    {
+        id: 250305,
+        title: "올려다보기",
+        url: "https://i.imgur.com/6x6FZ7a.jpeg",
+        location: "Tokyo, Japan",
+        camera: "samsung Galaxy S23",
+        focal: "7.00mm",
+        aperture: "f/2.4",
+        shutter: "1/1000",
+        iso: "ISO 32",
+        date: "Mar 5, 2025"
+    },
+    {
         id: 250210,
         title: "불",
         url: "https://i.imgur.com/7T6DpwL.png",
