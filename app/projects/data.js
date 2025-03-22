@@ -41,7 +41,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "500+"
+                "value": "2,000+"
             },
             {
                 "name": "기여도",

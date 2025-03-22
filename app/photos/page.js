@@ -1,25 +1,10 @@
-"use client";
-import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { useSearchParams } from 'next/navigation';
 import IonIcon from "@reacticons/ionicons";
-import { Suspense } from "react";
+import Image from "next/image";
+import getBlurImg from "./getBlurImg";
+
+export const revalidate = 86400;
 
 const images = [
-    {
-        id: 250312,
-        title: "비 온 뒤 맑음",
-        url: "https://i.imgur.com/mXhmYRh.jpeg",
-        location: "Shizuoka, Japan",
-        camera: "samsung Galaxy S23",
-        focal: "5.4mm",
-        aperture: "f/1.8",
-        shutter: "1/219",
-        iso: "ISO 25",
-        date: "Mar 12, 2025"
-    },
     {
         id: 250309,
         title: "강 위 기찻길",
@@ -154,88 +139,53 @@ const images = [
     }
 ]
 
-function Photos() {
-    const searchParams = useSearchParams();
-    const containerRef = useRef(null);
-
-    useEffect(() => {
-        const focus = searchParams.get('focus');
-        if (focus) {
-            const targetElement = document.getElementById(`photo-${focus}`);
-            if (targetElement) {
-                setTimeout(() => {
-                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 500);
-            }
-        }
-
-        gsap.registerPlugin(ScrollTrigger);
-
-        images.forEach((image) => {
-            const infoId = `info-${image.id}`;
-            const infoElement = document.getElementById(infoId);
-
-            if (infoElement) {
-                ScrollTrigger.create({
-                    trigger: `#photo-${image.id}`,
-                    start: "top top",
-                    end: "bottom bottom",
-                    pin: `#${infoId}`,
-                    pinSpacing: false
-                });
-            }
-        });
-
-        return () => {
-            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-        };
-    }, [searchParams]);
+async function Photos() {
+    // Precompute blur placeholders
+    const imagesWithBlur = await Promise.all(
+        images.map(async image => {
+            const blurData = await getBlurImg(image.url);
+            return { ...image, blurData: blurData || "" };
+        })
+    );
 
     return (
-        <main className="min-h-screen pt-16 px-6 pb-24 relative" ref={containerRef}>
+        <main className="min-h-screen pt-16 px-6 pb-24 relative">
             <div className="max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
-                <motion.h1
-                    layoutId='page-title'
-                    className="text-3xl font-black opacity-90 mb-12"
-                >
-                    Photographs
-                </motion.h1>
-
-                {images.map((image) => (
+                <h1 className="text-3xl font-black opacity-90 mb-12">Photographs</h1>
+                {imagesWithBlur.map(image => (
                     <div key={image.id} id={`photo-${image.id}`} className="mb-24">
                         <div className="grid grid-cols-1 md:grid-cols-12 gap-x-4 lg:gap-x-6 gap-y-8">
                             <div className="col-span-1 md:col-span-9">
-                                <img
-                                    loading="lazy"
-                                    className="w-full h-auto"
+                                <Image
                                     src={image.url}
                                     alt={image.title}
+                                    width={3000}
+                                    height={4000}
+                                    style={{
+                                        maxWidth: "100%",
+                                        height: "auto",
+                                    }}
+                                    placeholder={image.blurData ? "blur" : "empty"}
+                                    blurDataURL={image.blurData}
                                 />
                             </div>
-
                             <div className="col-span-1 md:col-span-3">
-                                <div
-                                    id={`info-${image.id}`}
-                                    className="md:sticky md:top-24 self-start"
-                                >
-                                    <h2 className="text-2xl font-bold uppercase mb-2">
-                                        {image.title}
-                                    </h2>
+                                <div id={`info-${image.id}`} className="md:sticky md:top-24 self-start">
+                                    <h2 className="text-2xl font-bold uppercase mb-2">{image.title}</h2>
                                     <p className="text-sm font-medium text-gray-500 mb-4">
                                         <IonIcon name="location-outline" className="inline-block mr-1 relative top-0.5" />
                                         {image.location}
                                     </p>
-
                                     <p className="text-sm text-gray-500">
                                         <IonIcon name="camera-outline" className="inline-block mr-1 relative top-0.5" />
-                                        {image.camera}</p>
+                                        {image.camera}
+                                    </p>
                                     <div className="flex text-sm text-gray-500">
                                         <p>{image.focal}</p>&nbsp;·&nbsp;
                                         <p>{image.aperture}</p>&nbsp;·&nbsp;
                                         <p>{image.shutter}</p>&nbsp;·&nbsp;
                                         <p>{image.iso}</p>
                                     </div>
-
                                     <p className="text-sm text-gray-500 mt-4">{image.date}</p>
                                 </div>
                             </div>
@@ -247,10 +197,6 @@ function Photos() {
     );
 }
 
-export default function Home() {
-    return (
-        <Suspense fallback={<div className="min-h-screen pt-16 px-6 pb-24 relative">Loading...</div>}>
-            <Photos />
-        </Suspense>
-    );
+export default async function Home() {
+    return <Photos />;
 }

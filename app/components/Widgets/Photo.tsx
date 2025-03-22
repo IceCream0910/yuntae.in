@@ -6,11 +6,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const images = [
-    { id: 0, img: "https://i.imgur.com/Bn4gnng.jpeg" },
-    { id: 2, img: "https://i.imgur.com/GHZOIqq.jpeg" },
-    { id: 1, img: "https://i.imgur.com/OKPYDl2.jpeg" },
-    { id: 3, img: "https://i.imgur.com/P8lqIlC.jpeg" },
-    { id: 4, img: "https://i.imgur.com/Kg4tQik.jpeg" }
+    { id: 0, img: "https://ik.imagekit.io/vhnrc0r8ovw/tr:w-0.1/iXxCE3G_gB3qlMFRV.jpeg" },
+    { id: 2, img: "https://ik.imagekit.io/vhnrc0r8ovw/tr:w-0.1/a7eOkZz_mhYE3j-Y0.jpeg" },
+    { id: 1, img: "https://ik.imagekit.io/vhnrc0r8ovw/tr:w-0.1/OKPYDl2_pPIEaeTPj.jpeg" },
 ];
 
 export default function Photo() {
