@@ -7,12 +7,12 @@ export default [
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca806ba967c630d144f345",
         "links": [
             {
-                "name": "Play Store",
-                "url": "https://play.google.com/store/apps/details?id=com.icecream.kwklasplus"
+                "name": "Website",
+                "url": "https://brief.yuntae.in"
             },
             {
                 "name": "Github",
-                "url": "https://github.com/IceCream0910/kw-klas-plus"
+                "url": "https://github.com/IceCream0910/weekly-brief"
             }
         ],
         "info": [
