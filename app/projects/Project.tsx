@@ -13,12 +13,24 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
     const controlsTimerRef = useRef(null);
     const [isReady, setIsReady] = useState(false);
     const modalRef = useRef(null);
+    const iframeRef = useRef(null);
+    const [iframeHeight, setIframeHeight] = useState('500px');
 
-    const variants = {
-        initial: { opacity: 0, y: -20 },
-        animate: { opacity: 1, y: 0 },
-        exit: { opacity: 0, y: -20 }
+    const handleMessage = (event) => {
+        setIframeHeight(event.data.height + 'px');
     };
+
+
+    useEffect(() => {
+        if (isSelected) {
+            window.addEventListener('message', handleMessage);
+            console.log(handleMessage)
+        }
+
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        };
+    }, [isSelected]);
 
     if (!data) return null;
 
@@ -50,7 +62,8 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
     useEffect(() => {
         if (isSelected) {
             document.body.style.overflow = 'hidden';
-            document.getElementById('main-section').style.overflow = 'hidden';
+            const mainSection = document.getElementById('main-section');
+            if (mainSection) mainSection.style.overflow = 'hidden';
             window.history.pushState({ overlay: true }, '');
             const handlePopState = () => {
                 setIsSelected(false);
@@ -59,10 +72,14 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
 
             return () => {
                 window.removeEventListener('popstate', handlePopState);
+                document.body.style.overflow = 'auto';
+                const mainSectionCleanup = document.getElementById('main-section');
+                if (mainSectionCleanup) mainSectionCleanup.style.overflow = 'auto';
             };
         } else {
             document.body.style.overflow = 'auto';
-            document.getElementById('main-section').style.overflow = 'auto';
+            const mainSection = document.getElementById('main-section');
+            if (mainSection) mainSection.style.overflow = 'auto';
         }
     }, [isSelected]);
 
@@ -199,7 +216,18 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
 
                                     <Spacer y={10} />
 
-                                    <p dangerouslySetInnerHTML={{ __html: data.desc }}></p>
+                                    {data.blogPostUrl && (
+                                        <iframe
+                                            ref={iframeRef}
+                                            src={data.blogPostUrl}
+                                            className="w-full rounded-[10px] mt-5 border-none"
+                                            title={`${title} Blog Post`}
+                                            style={{ height: iframeHeight }}
+                                        ></iframe>
+                                    )}
+                                    {!data.blogPostUrl && (
+                                        <p className="mt-5 text-center opacity-70">Blog post content not available for this project.</p>
+                                    )}
 
                                     <Spacer y={50} />
                                 </section>
