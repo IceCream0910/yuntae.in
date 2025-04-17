@@ -36,7 +36,7 @@ export default function Navy() {
             const timeServed = now.getTime() - enlistmentDate.getTime();
             const progressPercentage = (timeServed / totalServiceTime) * 100;
 
-            setProgress(progressPercentage);
+            setProgress(Math.round(progressPercentage * 100) / 100);
             setDaysServed(Math.ceil(timeServed / (1000 * 60 * 60 * 24)));
             setDaysLeft(Math.ceil((dischargeDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
         };

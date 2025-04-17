@@ -74,8 +74,6 @@ export default function History() {
                                 <motion.div
                                     key={index}
                                     className="backdrop-blur-sm mb-6"
-                                    whileHover={{ scale: 1.03, y: -2 }}
-                                    whileTap={{ scale: 0.98 }}
                                     onMouseEnter={() => setHoveredItem(index)}
                                     onMouseLeave={() => setHoveredItem(null)}
                                     transition={{ type: "spring", stiffness: 300 }}
@@ -103,8 +101,6 @@ export default function History() {
                                 <motion.div
                                     key={index}
                                     className="backdrop-blur-sm flex items-center justify-between"
-                                    whileHover={{ scale: 1.03, y: -2 }}
-                                    whileTap={{ scale: 0.98 }}
                                     onMouseEnter={() => setHoveredItem(index)}
                                     onMouseLeave={() => setHoveredItem(null)}
                                     transition={{ type: "spring", stiffness: 300 }}
