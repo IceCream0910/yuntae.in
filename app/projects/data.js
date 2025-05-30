@@ -18,15 +18,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "24.03 ~"
-            },
-            {
-                "name": "상태",
-                "value": "진행 중"
-            },
-            {
-                "name": "사용자",
-                "value": "2,000+"
+                "value": "25.04"
             },
             {
                 "name": "기여도",
