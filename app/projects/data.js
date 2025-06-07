@@ -53,7 +53,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "2,000+"
+                "value": "2,500+"
             },
             {
                 "name": "기여도",
@@ -98,7 +98,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "8,000+"
+                "value": "10,000+"
             },
             {
                 "name": "기여도",
@@ -183,7 +183,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "1000+"
+                "value": "2,000+"
             },
             {
                 "name": "기여도",
@@ -209,8 +209,8 @@ export default [
                 "url": "https://sungil.vercel.app"
             },
             {
-                "name": "플레이스토어",
-                "url": "https://play.google.com/store/apps/details?id=com.icecream.sungilmeal"
+                "name": "랜딩 페이지",
+                "url": "https://ssoak-intro.vercel.app/"
             }
         ],
         "info": [
@@ -325,7 +325,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "25만+"
+                "value": "30만+"
             },
             {
                 "name": "기여도",
@@ -359,7 +359,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "27만+"
+                "value": "30만+"
             },
             {
                 "name": "기여도",
