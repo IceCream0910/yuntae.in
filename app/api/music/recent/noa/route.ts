@@ -27,7 +27,6 @@ export async function GET(request) {
         const token_data = await response_token.json();
         const token = token_data.token_string;
         const corsResponse = NextResponse.json(token);
-        return cors(request, corsResponse);
         // 6개월 주기로 갱신 필요
         const mediaUserToken = process.env.NEXT_PUBLIC_APPLE_MUSIC_MEDIA_USER_TOKEN_NOA_KIM;
 
