@@ -26,7 +26,7 @@ export async function GET(request) {
         const response_token = await fetch(process.env.NEXT_PUBLIC_MUSICKIT_TOKEN_URL);
         const token_data = await response_token.json();
         const token = token_data.token_string;
-        const corsResponse = NextResponse.json(token);
+
         // 6개월 주기로 갱신 필요
         const mediaUserToken = process.env.NEXT_PUBLIC_APPLE_MUSIC_MEDIA_USER_TOKEN_NOA_KIM;
 
@@ -47,7 +47,8 @@ export async function GET(request) {
 
         const response = await fetch('https://api.music.apple.com/v1/me/recent/played/tracks?l=ko&types=songs', options);
         const data = await response.json();
-
+        const corsResponse = NextResponse.json(data);
+        return cors(request, corsResponse);
     } catch (error) {
         console.error(error);
         const errorResponse = NextResponse.json({ error: error.message }, { status: 500 });
