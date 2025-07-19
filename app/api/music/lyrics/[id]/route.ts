@@ -1,16 +1,46 @@
 import { NextResponse } from "next/server";
 
-export async function GET(req, { params }) {
+const allowedOrigins = [
+    'http://localhost',
+    'http://127.0.0.1',
+    'https://music.yuntae.in',
+    'https://yuntae.in',
+    'https://noa.kim',
+    'https://www.noa.kim',
+    'https://music.noa.kim'
+];
+
+function setCorsHeaders(request, response) {
+    const origin = request.headers.get("origin") ?? "";
+    if (allowedOrigins.includes(origin)) {
+        response.headers.set("Access-Control-Allow-Origin", origin);
+    }
+    response.headers.set("Vary", "Origin");
+    response.headers.set("Access-Control-Allow-Methods", "GET,OPTIONS");
+    response.headers.set("Access-Control-Allow-Headers", "Content-Type, Authorization, user-token");
+    return response;
+}
+
+export async function OPTIONS(request) {
+    const response = new NextResponse(null, { status: 204 });
+    return setCorsHeaders(request, response);
+}
+
+export async function GET(request, { params }) {
     const { id } = params;
-    if (!id) return NextResponse.json({ error: 'id is required' });
+    if (!id) {
+        const err = NextResponse.json({ error: 'id is required' }, { status: 400 });
+        return setCorsHeaders(request, err);
+    }
 
     try {
         const response_token = await fetch(process.env.NEXT_PUBLIC_MUSICKIT_TOKEN_URL);
-        const token_data = await response_token.json();
-        const token = token_data.token_string;
+        const { token_string: token } = await response_token.json();
 
-        // 6개월 주기로 갱신 필요
-        const mediaUserToken = process.env.NEXT_PUBLIC_APPLE_MUSIC_MEDIA_USER_TOKEN;
+        const headerToken = request.headers.get("user-token") ?? "";
+        const mediaUserToken = headerToken.trim()
+            ? headerToken
+            : process.env.NEXT_PUBLIC_APPLE_MUSIC_MEDIA_USER_TOKEN;
 
         const options = {
             method: 'GET',
@@ -27,12 +57,21 @@ export async function GET(req, { params }) {
             }
         };
 
-        const response = await fetch(`https://amp-api.music.apple.com/v1/catalog/kr/songs/${id}/syllable-lyrics?l=ko&platform=web`, options);
-        const data = await response.json();
-        return NextResponse.json(data);
+        const appleRes = await fetch(
+            `https://amp-api.music.apple.com/v1/catalog/kr/songs/${id}/syllable-lyrics?l=ko&platform=web`,
+            options
+        );
+        const data = await appleRes.json();
+
+        const jsonResponse = NextResponse.json(data);
+        return setCorsHeaders(request, jsonResponse);
     } catch (error) {
         console.error(error);
-        return NextResponse.json({ error: error });
+        const errorResponse = NextResponse.json(
+            { error: error.message },
+            { status: 500 }
+        );
+        return setCorsHeaders(request, errorResponse);
     }
 }
 
