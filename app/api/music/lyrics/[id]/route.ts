@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 
 const allowedOrigins = [
-    'http://localhost',
-    'http://127.0.0.1',
+    'http://localhost:3000',
     'https://music.yuntae.in',
     'https://yuntae.in',
     'https://noa.kim',
