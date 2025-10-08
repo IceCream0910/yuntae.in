@@ -1,13 +1,18 @@
 import { NextResponse } from 'next/server';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 export async function GET() {
-  return NextResponse.json(
-    { "m.server": "matrix.yuntae.in:443" },
-    {
+  const filePath = join(process.cwd(), 'public', '.well-known', 'matrix', 'server.json');
+  try {
+    const data = readFileSync(filePath, 'utf-8');
+    return new NextResponse(data, {
+      status: 200,
       headers: {
         'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-      }
-    }
-  );
+      },
+    });
+  } catch (err) {
+    return new NextResponse('Not found', { status: 404 });
+  }
 }
