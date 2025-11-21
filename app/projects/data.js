@@ -1,5 +1,32 @@
 export default [
     {
+        "title": "무~야호~",
+        "category": "Web",
+        "pin": true,
+        "summary": "세상의 모든 무도짤, 여기서 검색. AI 기반 자연어 짤 검색 서비스",
+        "blogPostUrl": "https://blog.yuntae.in/embed/2b2fc9b93eca80c68e01dfa91015a8ca",
+        "links": [
+            {
+                "name": "Website",
+                "url": "https://muyaho.yuntae.in"
+            },
+            {
+                "name": "Github",
+                "url": "https://github.com/IceCream0910/muyaho"
+            }
+        ],
+        "info": [
+            {
+                "name": "기간",
+                "value": "25.11."
+            },
+            {
+                "name": "기여도",
+                "value": "개인"
+            }
+        ]
+    },
+    {
         "title": "Weekly Brief",
         "category": "Web",
         "pin": true,
@@ -18,7 +45,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "25.04"
+                "value": "25.04."
             },
             {
                 "name": "기여도",
@@ -45,7 +72,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "24.03 ~"
+                "value": "24.03. ~"
             },
             {
                 "name": "상태",
@@ -53,7 +80,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "2,500+"
+                "value": "3,500+"
             },
             {
                 "name": "기여도",
@@ -61,7 +88,7 @@ export default [
             }
         ],
         "icon": "https://play-lh.googleusercontent.com/D3VIroKtbnjKShdEXLZ0JtPC6if-ewnTK2JNkO3Lh6EbJRwZMj-fmbYNz4zFljSIkw=w480-h960-rw",
-        "image": ["https://i.imgur.com/mKwd1Ae.png", "https://i.imgur.com/wLz4Bri.png", "https://i.imgur.com/fF9M5sn.png", "https://i.imgur.com/X4kMSua.png"],
+        "image": ["https://play-lh.googleusercontent.com/W_q7oyiU3uDJsFnWbKf3Ojb8DfcwLhzr1UzDq-WHGBqWhrbUZGf3G9w4pdXMDBC4ssH5DeTQs1RWGxPadUbv=w5120-h2880-rw", "https://play-lh.googleusercontent.com/UaYvUQ4ECyy82kfpNdGQc3-tKKBx_gKJrL5rhyLqM6sxcX9zl8SRL4Pjkuf9f2K5mIC5BIp9UdqEESabAF0E=w5120-h2880-rw", "https://play-lh.googleusercontent.com/RftWXABYEzIPvXys0ha9C7IUm3PhameDpAHWVvJRGmyKexWCG5NI6sitbmGkVd8mbaxQ8y4qJ_YaY7tW4KXxGA=w5120-h2880-rw", "https://play-lh.googleusercontent.com/czAPmU6POy4jjFGMAxBsuAFG0JofSjWPwYHGNKWY-ESTdL7qX_IQOjZYnTWJ1ZR6AwVjY3lnOK99FuNSIFdX_d0=w5120-h2880-rw", "https://play-lh.googleusercontent.com/ra1c6PjMZuQ6SLJMRyklub_ZVU6mwKn36taSOoqSx4bJebaYVA3zAiMCG7l8MchdW8o5nKyfUErj62g_xIl-=w5120-h2880-rw", "https://play-lh.googleusercontent.com/iGWWI7hvzbTDVdmntUrdB7jIsqvJWN5ur_yBJq4krVZVGT7kkfYJZcBkIPyO-aseKDkiE9WtPDeZ3TO2j4Wqd3M=w5120-h2880-rw"],
     },
     {
         "title": "라디오",
@@ -90,7 +117,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "23.12 ~"
+                "value": "23.12. ~"
             },
             {
                 "name": "상태",
@@ -98,7 +125,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "10,000+"
+                "value": "16,000+"
             },
             {
                 "name": "기여도",
@@ -106,7 +133,7 @@ export default [
             }
         ],
         "participants": "개인",
-        "icon": "https://radio.yuntae.in/icon.png",
+        "icon": "https://play-lh.googleusercontent.com/i2P8TGU4NuX0GtH-IgqJHPc8nlsvlyu7rSL0LEI6AsaVlLK3IcP5Jq-OoS1rusgK7Ck=w480-h960-rw",
         "image": ["https://play-lh.googleusercontent.com/YizavywxqvnCmeq4UQ0jTc0ub8j3Rh7pOtXzq_GgOEUKNCjvTN-vOphZ6eSS5mG9ykM=w1052-h592-rw", "https://play-lh.googleusercontent.com/KbtUy6kECpil1B-4P62YLvglz0p7X3vZ6--fbPSYO3E3PpBQ6BHRJdt2Z89aVEVz_9A=w1052-h592-rw", "https://play-lh.googleusercontent.com/nEFlgpSrNrFOcAgL7lnqCzzXRZuhqm4bQcxN-LmFrWsGGiFH5a2b34b2Od9UKKaTlmA=w1052-h592-rw", "https://play-lh.googleusercontent.com/UxQuODSPCb6uxq4JplYym4NPJdgf9HNNZayCMu62BxSpDAfHDs9B01W5iEuodRt1lko=w1052-h592-rw", "https://play-lh.googleusercontent.com/Z-Q7VJlYq1lWCigz3Qerqe4yEEZHaqFw1TDqhgBjIqo_1SqcKwGyezAbMRBHoJdIhCQ=w1052-h592-rw"]
     },
     {
@@ -128,7 +155,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "24.09 ~ 24.12"
+                "value": "24.09. ~ 24.12."
             },
             {
                 "name": "상태",
@@ -175,7 +202,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "24.08"
+                "value": "24.08."
             },
             {
                 "name": "상태",
@@ -216,7 +243,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "22.01 ~ 24.01"
+                "value": "22.01. ~ 24.01."
             },
             {
                 "name": "상태",
@@ -259,7 +286,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "23.09 ~ 23.12"
+                "value": "23.09. ~ 23.12."
             },
             {
                 "name": "상태",
@@ -269,20 +296,6 @@ export default [
                 "name": "기여도",
                 "value": "개인"
             }
-        ],
-        "icon": "",
-        "image": []
-    },
-    {
-        "title": "박명수 짤 검색기",
-        "category": ["Web"],
-        "directLink": "https://myungsu.vercel.app/",
-        "pin": false,
-        "summary": "키워드로 박명수 짤을 검색할 수 있는 웹 사이트",
-        "desc": "",
-        "links": [
-        ],
-        "info": [
         ],
         "icon": "",
         "image": []
@@ -419,7 +432,7 @@ export default [
         "info": [
             {
                 "name": "기간",
-                "value": "20.03 ~ 22.05"
+                "value": "20.03. ~ 22.05."
             },
             {
                 "name": "상태",

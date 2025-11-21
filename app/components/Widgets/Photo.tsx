@@ -36,7 +36,7 @@ export default function Photo() {
                 <span className='emoji'>📷</span> 직접 찍은 사진</span>
             <h2 className="relative text-3xl font-black break-keep text-pretty -mt-1 mb-4">
                 <motion.span layoutId='page-title'>Photos</motion.span>
-                <Link href={`/photos`}>
+                <Link href={`https://photo.yuntae.in`} target="_blank">
                     <button className="absolute -top-5 right-0 bg-black/15 dark:bg-black/50 flex items-center justify-center rounded-full p-2 hover:bg-black/30 dark:hover:bg-black/30">
                         <IonIcon name="add" className="text-[var(--foreground)] text-xl" />
                     </button>
