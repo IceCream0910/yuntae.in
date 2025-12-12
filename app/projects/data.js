@@ -301,20 +301,6 @@ export default [
         "image": []
     },
     {
-        "title": "굴절 시뮬레이터",
-        "category": ["Web"],
-        "directLink": "https://gulzeol.vercel.app/",
-        "pin": false,
-        "summary": "고등학교 때 물리학 과목의 생기부를 쓰려고 만든 굴절 시뮬레이터",
-        "desc": "",
-        "links": [
-        ],
-        "info": [
-        ],
-        "icon": "",
-        "image": []
-    },
-    {
         "title": "T-REX Runner in Sidebar",
         "category": ["Browser Extension"],
         "directLink": "https://store.whale.naver.com/detail/oopeaffdcbgoeicbcibbmialglioebkj",
