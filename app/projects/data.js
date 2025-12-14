@@ -3,7 +3,9 @@ export default [
         "title": "무~야호~",
         "category": "Web",
         "pin": true,
+        "icon": "https://i.imgur.com/QqMpJvU.png",
         "summary": "세상의 모든 무도짤, 여기서 검색. AI 기반 자연어 짤 검색 서비스",
+        "thumbnail": "https://i.imgur.com/f0AyXbA.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/2b2fc9b93eca80c68e01dfa91015a8ca",
         "links": [
             {
@@ -31,6 +33,7 @@ export default [
         "category": "Web",
         "pin": true,
         "summary": "AI가 한 주 동안의 세상사를 요약해드립니다.",
+        "thumbnail": "https://i.imgur.com/Z1nJEjJ.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca806ba967c630d144f345",
         "links": [
             {
@@ -55,9 +58,10 @@ export default [
     },
     {
         "title": "KLAS+",
-        "category": "KWU",
+        "category": ["KWU", "App"],
         "pin": true,
         "summary": "광운대학교 KLAS 앱의 기능과 UI를 추가 및 수정한 안드로이드 앱.",
+        "thumbnail": "https://i.imgur.com/75Ry7IV.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/109fc9b9-3eca-801c-8473-f4b5cdb5b3c0",
         "links": [
             {
@@ -92,9 +96,10 @@ export default [
     },
     {
         "title": "라디오",
-        "category": ["App", "Web", "Browser Extension"],
+        "category": ["App", "Web", "Extension"],
         "pin": true,
         "summary": "파편화된 라디오 앱 설치 없이 사용 가능한 인터넷 라디오 스트리밍 앱.",
+        "thumbnail": "https://i.imgur.com/Ifj1SwL.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca80c4added748c3a023d6",
         "links": [
             {
@@ -138,9 +143,10 @@ export default [
     },
     {
         "title": "LifeLink",
-        "category": "KWU",
+        "category": ["KWU", "Web"],
         "pin": false,
         "summary": "응급실 뺑뺑이 문제 해결을 위한 응급 환자 이송 병원 탐색 솔루션",
+        "thumbnail": "https://i.imgur.com/bOrM3XK.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca80b49a53cdd2984fe40c",
         "links": [
             {
@@ -169,16 +175,15 @@ export default [
                 "name": "기여도",
                 "value": "FE/BE 개발"
             }
-        ],
-        "icon": "",
-        "image": [],
+        ]
     },
     {
         "title": "비빔랭",
-        "category": ["Esolang"],
+        "category": "etc.",
         "pin": false,
         "summary": "넷플릭스 시리즈 '흑백요리사'의 비빔대왕 밈에서 착안해 개발된 난해한 프로그래밍 언어",
         "desc": "",
+        "thumbnail": "https://i.imgur.com/H7ddbfk.png",
         "directLink": "https://bibim-docs.yuntae.in/",
         "icon": "",
         "image": []
@@ -188,6 +193,7 @@ export default [
         "category": "Web",
         "pin": false,
         "summary": "텍스트를, 입력하면..~ 아재.말투로.. 변환해줍니다..^^",
+        "thumbnail": "https://i.imgur.com/s7oRJk4.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca80d9a3cef63a83884b36",
         "links": [
             {
@@ -216,15 +222,76 @@ export default [
                 "name": "기여도",
                 "value": "개인"
             }
+        ]
+    },
+    {
+        "title": "Now Listening",
+        "category": "Web",
+        "pin": false,
+        "summary": "제가 요즘 듣고 있는 음악을 함께 들어보세요.",
+        "thumbnail": "https://i.imgur.com/zM4pDGE.png",
+        "links": [
+            {
+                "name": "Website",
+                "url": "https://music.yuntae.in/"
+            },
+            {
+                "name": "Github",
+                "url": "https://github.com/IceCream0910/now-listening"
+            }
         ],
-        "icon": "",
-        "image": ["https://i.imgur.com/HJPtsTB.png", "https://i.imgur.com/X2rLiAu.png"],
+        "info": [
+            {
+                "name": "기간",
+                "value": "24.08. ~"
+            },
+            {
+                "name": "상태",
+                "value": "서비스 중"
+            },
+            {
+                "name": "기여도",
+                "value": "개인"
+            }
+        ]
+    },
+    {
+        "title": "icecream-ui",
+        "category": "Web",
+        "pin": false,
+        "summary": "나만의 React UI 컴포넌트 라이브러리",
+        "thumbnail": "https://camo.githubusercontent.com/8d23dbe1834be4c84c622c907348a961724fd9068cc366081d691ffb24f37a51/68747470733a2f2f692e696d6775722e636f6d2f656a4774707a642e706e67",
+        "links": [
+            {
+                "name": "Website",
+                "url": "https://ui.yuntae.in/"
+            },
+            {
+                "name": "Github",
+                "url": "https://github.com/IceCream0910/icecream-ui"
+            }
+        ],
+        "info": [
+            {
+                "name": "기간",
+                "value": "24.08."
+            },
+            {
+                "name": "상태",
+                "value": "종료"
+            },
+            {
+                "name": "기여도",
+                "value": "개인"
+            }
+        ]
     },
     {
         "title": "쏙",
         "category": ["App", "Web"],
         "pin": false,
         "summary": "성일고등학교의 급식, 시간표, 학사일정 등 정보를 한 눈에 볼 수 있는 서비스.",
+        "thumbnail": "https://i.imgur.com/mTbeaJo.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca80299447cd021ec59ee0",
         "links": [
             {
@@ -262,7 +329,6 @@ export default [
         "participants": "개인",
         "icon": "https://sungil.vercel.app/icons/icon.png",
         "image": [
-            "https://play-lh.googleusercontent.com/F5sjnKun6Quga1sicKGBDh7q3rQTUN7bz9oy-Jcu-Dd_qC01dola-OLuN2B83Hr2YQ=w5120-h2880-rw",
             "https://play-lh.googleusercontent.com/SWABm8PtWAOsjGsp4W9gYp0ud3jwa0zN5PLy_1WXE3EuX5yglFHCrcjTrpBZ8QBcVUw=w5120-h2880-rw",
             "https://play-lh.googleusercontent.com/D35ECmLL5nwQRtYoV3Thq_UgfmOGs0NxYh4Qa-6gYb0H2-SqmzGuqQXqL2OmHSv1KLo=w5120-h2880-rw",
             "https://play-lh.googleusercontent.com/NlNVcFdj2gBoJvA5YUhJ0Wr6c8Nqoe7aj6EfJwXDdr2v8r56Vt7jNzm3BNNSLE0CKI3d=w5120-h2880-rw",
@@ -276,6 +342,7 @@ export default [
         "category": ["Web"],
         "pin": false,
         "summary": "AI를 이용해 대학 생기부 기반 면접 준비를 도와주는 사이트.",
+        "thumbnail": "https://i.imgur.com/ndGrAxn.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca803895c0f7c8fc875000",
         "links": [
             {
@@ -296,13 +363,43 @@ export default [
                 "name": "기여도",
                 "value": "개인"
             }
+        ]
+    },
+    {
+        "title": "0yak",
+        "category": "Web",
+        "pin": false,
+        "thumbnail": "https://i.imgur.com/Hm3td33.png",
+        "summary": "제20대 대통령 선거 후보별 공약 분석 사이트",
+        "links": [
+            {
+                "name": "Website",
+                "url": "https://0yak.vercel.app"
+            },
+            {
+                "name": "Github",
+                "url": "https://github.com/icecream0910/0yak"
+            }
         ],
-        "icon": "",
-        "image": []
+        "info": [
+            {
+                "name": "기간",
+                "value": "22.02. ~ 22.03."
+            },
+            {
+                "name": "상태",
+                "value": "종료"
+            },
+            {
+                "name": "기여도",
+                "value": "개인"
+            }
+        ],
+        "icon": "https://0yak.vercel.app/assets/img/icon256.png",
     },
     {
         "title": "T-REX Runner in Sidebar",
-        "category": ["Browser Extension"],
+        "category": ["Extension"],
         "directLink": "https://store.whale.naver.com/detail/oopeaffdcbgoeicbcibbmialglioebkj",
         "pin": false,
         "summary": "Chrome 이스터에그인 공룡 게임을 리메이크해 웨일 사이드바에서 플레이할 수 있는 확장앱 ",
@@ -336,7 +433,7 @@ export default [
     },
     {
         "title": "Google Keep in Sidebar",
-        "category": ["Browser Extension"],
+        "category": ["Extension"],
         "directLink": "https://store.whale.naver.com/detail/mpigbcflpddfcbidjdnaadbccaffdene",
         "pin": false,
         "summary": "Google Keep을 웨일 사이드바에 최적화된 UI로 사용할 수 있도록 한 확장앱",
@@ -370,7 +467,7 @@ export default [
     },
     {
         "title": "Blockit",
-        "category": ["Browser Extension"],
+        "category": ["Extension"],
         "pin": false,
         "summary": "특정 사이트 접속 차단 기능을 제공하는 브라우저 확장앱",
         "directLink": "https://store.whale.naver.com/detail/gfdaidimgcibdjiidpmbobhhaojnjbfd",
@@ -396,10 +493,32 @@ export default [
         "image": ["https://whale-store.pstatic.net/20191229_257/1577546353275xMyTc_PNG/1.png", "https://whale-store.pstatic.net/20191229_236/1577546357699txSDe_PNG/2.png", "https://whale-store.pstatic.net/20191229_268/15775463577022v9rD_PNG/3.png"]
     },
     {
+        "title": "자가진단 대신해드림",
+        "category": ["App"],
+        "pin": false,
+        "summary": "학교 코로나19 자가진단을 매일 자동으로 제출해주는 앱",
+        "thumbnail": "https://i.imgur.com/9apNRNx.png",
+        "info": [
+            {
+                "name": "기간",
+                "value": "21.03. ~ 21.04"
+            },
+            {
+                "name": "상태",
+                "value": "종료"
+            },
+            {
+                "name": "기여도",
+                "value": "개인"
+            }
+        ]
+    },
+    {
         "title": "코로나콕",
         "category": ["App", "Web"],
         "pin": false,
-        "summary": "코로나19 현황과 정보를 시각화하여 보여주는 대시보드 서비스.",
+        "thumbnail": "https://i.imgur.com/gnUk2Fe.png",
+        "summary": "코로나19 현황과 정보를 시각화하여 보여주는 대시보드",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca8047a35ae16e1657511e",
         "links": [
             {
@@ -409,10 +528,6 @@ export default [
             {
                 "name": "웹 버전",
                 "url": "https://coronacoc.vercel.app/app/"
-            },
-            {
-                "name": "원스토어",
-                "url": "https://m.onestore.co.kr/mobilepoc/apps/appsDetail.omp?prodId=0000756996"
             }
         ],
         "info": [
@@ -435,5 +550,27 @@ export default [
         ],
         "icon": "https://coronacoc.vercel.app/app/assets/img/icons/coronacoc_icon_new.png",
         "image": ["https://img.onestore.co.kr/thumbnails/img_sac/0_0_A20_40/data12/android/202107/14/SE201907221631509800045734/0000756996/img/preview/0000756996_DP000103_20210714083813.png", "https://img.onestore.co.kr/thumbnails/img_sac/0_0_A20_40/data12/android/202107/14/SE201907221631509800045734/0000756996/img/preview/0000756996_DP000104_20210714083816.png", "https://img.onestore.co.kr/thumbnails/img_sac/0_0_A20_40/data12/android/202107/14/SE201907221631509800045734/0000756996/img/preview/0000756996_DP000105_20210714083820.png", "https://img.onestore.co.kr/thumbnails/img_sac/0_0_A20_40/data12/android/202107/14/SE201907221631509800045734/0000756996/img/preview/0000756996_DP000106_20210714083824.png"]
+    },
+    {
+        "title": "제곱해드림",
+        "category": ["App"],
+        "pin": false,
+        "thumbnail": "https://i.imgur.com/mUNWcMS.png",
+        "summary": "큰 숫자의 거듭제곱을 세상 요란하게 계산해주는 앱",
+        "info": [
+            {
+                "name": "기간",
+                "value": "20.01."
+            },
+            {
+                "name": "상태",
+                "value": "종료"
+            },
+            {
+                "name": "기여도",
+                "value": "개인"
+            }
+        ],
+        "icon": "https://img.onestore.co.kr/thumbnails/img_sac/122_122_A20_40/data6/android/202001/05/SE201907221631509800045734/0000745395/img/original/0000745395_DP000101_20200105170323.png",
     },
 ];

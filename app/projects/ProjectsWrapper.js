@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { AnimatePresence } from 'framer-motion';
 import projectData from "./data";
 import Project from "./Project";
 import IonIcon from '@reacticons/ionicons';
@@ -95,9 +96,11 @@ export default function ProjectsWrapper() {
             </div>
 
             <div className="grid gap-5 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
-                {filteredProjects.map((project, index) => (
-                    <Project key={index} {...project} />
-                ))}
+                <AnimatePresence mode="popLayout">
+                    {filteredProjects.map((project) => (
+                        <Project key={project.title} {...project} />
+                    ))}
+                </AnimatePresence>
             </div>
         </div>
     );

@@ -93,21 +93,25 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
     return (
         <>
             <motion.div
+                className="cursor-pointer bg-[var(--secondary)] h-full rounded-3xl p-2"
                 layoutId={`card-${title}`}
                 onClick={() => {
                     if (directLink) window.open(directLink, '_blank');
                     else setIsSelected(true);
                 }}
-                initial={false}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.2 }}
                 layout
             >
-                <div className="cursor-pointer bg-[var(--secondary)] h-full rounded-2xl p-5"
-                    style={{ aspectRatio: 'unset' }}>
-                    <motion.b layoutId={`title-${title}`} className="card-title text-base m-0">
+                <motion.img layoutId={`thumbnail-${title}`} src={props.thumbnail} className="cursor-pointer w-full rounded-2xl"/>
+                <div className="px-3 py-4 aspect-[unset]">
+                    <motion.b layoutId={`title-${title}`} className="card-title text-lg m-0">
                         {title}
                         {directLink && <IonIcon name='arrow-forward-outline' className="ml-[5px] text-base opacity-60 relative top-[3px] rotate-[-45deg]" />}
                     </motion.b>
-                    <motion.p layoutId={`summary-${title}`} className="text-[15px] m-0 mt-[5px] text-gray-700 dark:text-gray-400">
+                    <motion.p layoutId={`summary-${title}`} className="text-sm m-0 text-gray-700 dark:text-gray-400">
                         {summary}
                     </motion.p>
                 </div>
@@ -178,6 +182,11 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
 
                                     <Spacer y={30} />
 
+                                    {!data.image && data.thumbnail &&
+                                        <motion.img layoutId={`thumbnail-${title}`} src={props.thumbnail} className="w-full rounded-2xl"/> 
+                                    }
+
+                                    {data.image && (
                                     <div className="relative">
                                         <div
                                             className="flex overflow-x-auto overflow-y-hidden scrollbar-none"
@@ -201,7 +210,7 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                                                     </button>
                                                 </>
                                             )}
-                                            {data.image && data.image.map((img, i) => (
+                                            {data.image.map((img, i) => (
                                                 <div key={i} className="flex-none relative mr-5 rounded-[10px] w-[40%] lg:w-[30%] 2xl:w-[20%]" style={{
                                                     width: '40%'
                                                 }}>
@@ -213,6 +222,7 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                                             ))}
                                         </div>
                                     </div>
+                                    )}
 
                                     <Spacer y={10} />
 
@@ -224,9 +234,6 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                                             title={`${title} Blog Post`}
                                             style={{ height: iframeHeight }}
                                         ></iframe>
-                                    )}
-                                    {!data.blogPostUrl && (
-                                        <p className="mt-5 text-center opacity-70">Blog post content not available for this project.</p>
                                     )}
 
                                     <Spacer y={50} />

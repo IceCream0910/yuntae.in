@@ -12,10 +12,10 @@ import Photo from "./components/Widgets/Photo";
 import Github from "./components/Widgets/Github";
 import Solvedac from "./components/Widgets/Solvedac";
 import Hobby from "./components/Widgets/Hobby";
-import Media from "./components/Widgets/Media";
 import SkillSet from "./components/Widgets/SkillSet";
 import Navy from "./components/Widgets/Navy";
 import History from "./components/Widgets/History";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
@@ -23,6 +23,7 @@ export default function Home() {
       <NavBar activeTab={0} />
       <main className="min-h-screen pt-16 px-6 pb-24 relative">
         <div className="max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
+          <motion.h1 layoutId="main-title">
           <BlurText
             text="안녕하세요🖐️"
             delay={150}
@@ -37,6 +38,7 @@ export default function Home() {
             direction="top"
             className="text-3xl font-black opacity-90 mb-4"
           />
+          </motion.h1>
 
 
           <div className="flex space-x-4 mb-8">
