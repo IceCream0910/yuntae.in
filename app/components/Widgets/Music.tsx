@@ -69,7 +69,7 @@ const Music = () => {
                     {musicData.title || 'Loading...'}
                 </h3>
                 <p className="m-0 -mt-1 text-sm text-gray-400 truncate">
-                    {musicData.artist || 'Please wait'}
+                    {musicData.artist || '플레이리스트에 연결 중'}
                 </p>
 
                 <button className="relative float-right -top-9 bg-black/15 dark:bg-black/50 flex items-center justify-center rounded-full p-2 hover:bg-black/30 dark:hover:bg-black/30"
