@@ -4,10 +4,8 @@ const allowedOrigins = ['http://localhost:3000', 'https://music.yuntae.in', 'htt
 
 function setCorsHeaders(request, response) {
     const origin = request.headers.get("origin") ?? "";
-    console.log(allowedOrigins.includes(origin), origin);
     if (allowedOrigins.includes(origin)) {
         response.headers.set("Access-Control-Allow-Origin", origin);
-        console.log("CORS Origin:", origin);
     }
     response.headers.set("Vary", "Origin");
     response.headers.set("Access-Control-Allow-Methods", "GET,OPTIONS");

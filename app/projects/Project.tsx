@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState, useRef } from "react";
 import IonIcon from '@reacticons/ionicons';
 import Spacer from '../components/Spacer';
+import LazyImage from '../components/LazyImage';
 
 export default function Project({ title, icon, summary, directLink, ...props }) {
     const data = projectData.find((project) => project.title === decodeURIComponent(title));
@@ -15,6 +16,25 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
     const modalRef = useRef(null);
     const iframeRef = useRef(null);
     const [iframeHeight, setIframeHeight] = useState('500px');
+    const [blurDataURL, setBlurDataURL] = useState<string | undefined>(undefined);
+
+    // Generate blur placeholder from original image
+    useEffect(() => {
+        if (!props.thumbnail) return;
+        
+        const img = new Image();
+        img.crossOrigin = 'Anonymous';
+        img.src = props.thumbnail;
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = 10;
+            canvas.height = 10;
+            ctx?.drawImage(img, 0, 0, 10, 10);
+            const blurData = canvas.toDataURL('image/jpeg', 0.5);
+            setBlurDataURL(blurData);
+        };
+    }, [props.thumbnail]);
 
     const handleMessage = (event) => {
         setIframeHeight(event.data.height + 'px');
@@ -24,7 +44,6 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
     useEffect(() => {
         if (isSelected) {
             window.addEventListener('message', handleMessage);
-            console.log(handleMessage)
         }
 
         return () => {
@@ -105,7 +124,15 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                 transition={{ duration: 0.2 }}
                 layout
             >
-                <motion.img layoutId={`thumbnail-${title}`} src={props.thumbnail} className="cursor-pointer w-full rounded-2xl"/>
+                {props.thumbnail && (
+                    <LazyImage 
+                        layoutId={`thumbnail-${title}`} 
+                        src={props.thumbnail} 
+                        className="cursor-pointer rounded-2xl"
+                        aspectRatio="16/10"
+                        blurDataURL={blurDataURL}
+                    />
+                )}
                 <div className="px-3 py-4 aspect-[unset]">
                     <motion.b layoutId={`title-${title}`} className="card-title text-lg m-0">
                         {title}
