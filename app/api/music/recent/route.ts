@@ -22,14 +22,14 @@ export async function OPTIONS(request) {
 
 export async function GET(request) {
     try {
-        const response_token = await fetch(process.env.NEXT_PUBLIC_MUSICKIT_TOKEN_URL);
+        const response_token = await fetch(process.env.MUSICKIT_TOKEN_URL);
         const { token_string: token } = await response_token.json();
 
         const headerToken = request.headers.get("user-token")
             ?? "";
         const mediaUserToken = headerToken.trim()
             ? headerToken
-            : process.env.NEXT_PUBLIC_APPLE_MUSIC_MEDIA_USER_TOKEN;
+            : process.env.APPLE_MUSIC_MEDIA_USER_TOKEN;
 
         const options = {
             method: 'GET',

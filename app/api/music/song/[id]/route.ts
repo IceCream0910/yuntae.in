@@ -34,11 +34,11 @@ export async function GET(req, { params }) {
     }
 
     try {
-        const response_token = await fetch(process.env.NEXT_PUBLIC_MUSICKIT_TOKEN_URL);
+        const response_token = await fetch(process.env.MUSICKIT_TOKEN_URL);
         const token_data = await response_token.json();
         const token = token_data.token_string;
 
-        const mediaUserToken = process.env.NEXT_PUBLIC_APPLE_MUSIC_MEDIA_USER_TOKEN;
+        const mediaUserToken = process.env.APPLE_MUSIC_MEDIA_USER_TOKEN;
 
         const options = {
             method: 'GET',
