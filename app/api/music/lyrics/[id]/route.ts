@@ -26,7 +26,7 @@ export async function OPTIONS(request) {
 }
 
 export async function GET(request, { params }) {
-    const { id } = params;
+    const { id } = await params;
     if (!id) {
         const err = NextResponse.json({ error: 'id is required' }, { status: 400 });
         return setCorsHeaders(request, err);
