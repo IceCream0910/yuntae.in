@@ -71,6 +71,10 @@ export default [
             {
                 "name": "Github",
                 "url": "https://github.com/IceCream0910/kw-klas-plus"
+            },
+            {
+                "name": "Behance",
+                "url": "https://www.behance.net/gallery/244483723/KWU-KLAS-Rebuild-Project-UIUX-Designs"
             }
         ],
         "info": [
