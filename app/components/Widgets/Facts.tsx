@@ -47,7 +47,6 @@ export default function Facts() {
         let isBold = false;
         const result: { char: string; isBold: boolean; isEmoji: boolean; }[] = [];
 
-        // `**`를 기준으로 분리하여 볼드체 여부 추적
         const parts = fact.split(/(\*\*)/);
 
         for (const part of parts) {
@@ -55,7 +54,6 @@ export default function Facts() {
                 isBold = !isBold;
             } else {
                 let chars: string[] = [];
-                // Intl.Segmenter를 사용해 이모지와 한글 글자 단위 분리
                 if (typeof Intl !== 'undefined' && Intl.Segmenter) {
                     chars = Array.from(new Intl.Segmenter('ko-KR', { granularity: 'grapheme' }).segment(part)).map(s => s.segment);
                 } else {
@@ -78,12 +76,12 @@ export default function Facts() {
         <div className="relative w-full h-full flex flex-col">
             <span className='text-sm text-gray-500'>태인의 TMI</span>
 
-            <div className="flex-1 mt-2">
+            <div className="flex-1 mt-2 overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar">
                 <AnimatePresence mode="wait">
                     {fact && (
                         <motion.h2
                             key={currentIndex}
-                            className="relative text-3xl break-keep text-pretty"
+                            className="relative text-xl sm:text-xl md:text-2xl xl:text-3xl break-keep text-pretty"
                             initial="hidden"
                             animate="visible"
                             exit="exit"
@@ -91,7 +89,7 @@ export default function Facts() {
                                 hidden: { opacity: 0 },
                                 visible: {
                                     opacity: 1,
-                                    transition: { staggerChildren: 0.015 } // 글자별 순차적 애니메이션
+                                    transition: { staggerChildren: 0.015 }
                                 },
                                 exit: {
                                     opacity: 0,
@@ -107,8 +105,7 @@ export default function Facts() {
                                         hidden: { opacity: 0, fontWeight: 100 },
                                         visible: {
                                             opacity: 1,
-                                            // 키워드는 최종적으로 800, 일반 텍스트는 300으로 렌더링
-                                            fontWeight: isBold ? [100, 900, 300, 800] : [100, 900, 300, 300],
+                                            fontWeight: isBold ? [100, 900, 800] : [100, 900, 300],
                                             transition: { duration: 0.8, ease: "easeInOut" }
                                         },
                                         exit: { opacity: 0, transition: { duration: 0.1 } }
