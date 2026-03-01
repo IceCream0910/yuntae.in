@@ -10,11 +10,11 @@ export default function History() {
 
     const education = [
         { institution: '성일고등학교', detail: '일반 인문계', period: '2021~2024', icon: 'school-outline' as const },
-        { institution: '광운대학교', detail: '소프트웨어학부', period: '2024~', icon: 'laptop-outline' as const },
+        { institution: '광운대학교', detail: '인공지능융합대학 소프트웨어학부', period: '2024~', icon: 'laptop-outline' as const },
     ];
 
     const certifications = [
-        { name: '정보처리기능사', year: '2017', icon: 'code-slash-outline' as const },
+        { name: '정보처리기능사 (현.프로그래밍기능사)', year: '2017', icon: 'code-slash-outline' as const },
         { name: '컴퓨터활용능력 2급', year: '2016', icon: 'desktop-outline' as const },
         { name: 'GTQ 그래픽기술자격 1급', year: '2017', icon: 'brush-outline' as const },
     ];
@@ -26,12 +26,7 @@ export default function History() {
                 <div className="w-1.5 h-1.5 rounded-full bg-[var(--secondary)] opacity-30"></div>
             </div>
 
-            <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-[var(--foreground)] -mt-1">
-                    <IonIcon name={activeTab === 'education' ? 'school' : 'ribbon' as const} className="relative mr-2 top-1" />
-                    {activeTab === 'education' ? '학력' : '자격증'}
-                </h2>
-
+            <div className="flex mb-4">
                 <div className="flex bg-[var(--secondary)]/20 rounded-full p-1 backdrop-blur-sm">
                     <button
                         onClick={() => setActiveTab('education')}
@@ -54,14 +49,16 @@ export default function History() {
                 </div>
             </div>
 
-            <div className="flex-grow overflow-hidden mt-4">
+            <div className="flex-grow overflow-hidden relative">
+                {/* Timeline background line (Full Card Height) */}
+                <div className="absolute left-[15px] top-0 bottom-0 w-[1px] bg-[var(--foreground)] opacity-20 z-0"></div>
+
                 <AnimatePresence mode="wait">
                     <motion.div
-                        className="h-full space-y-3 overflow-y-auto pr-1 pb-1"
+                        className="h-full relative overflow-y-auto pr-1 pb-1 z-10"
                         style={{
                             maxHeight: 'calc(100% - 10px)',
-                            scrollbarWidth: 'thin',
-                            scrollbarColor: 'var(--secondary) transparent'
+                            scrollbarWidth: 'none',
                         }}
                         key={activeTab}
                         initial={{ opacity: 0, y: 10 }}
@@ -69,59 +66,51 @@ export default function History() {
                         exit={{ opacity: 0, y: -10 }}
                         transition={{ duration: 0.3 }}
                     >
-                        {activeTab === 'education' ? (
-                            education.map((item, index) => (
-                                <motion.div
-                                    key={index}
-                                    className="backdrop-blur-sm mb-6"
-                                    onMouseEnter={() => setHoveredItem(index)}
-                                    onMouseLeave={() => setHoveredItem(null)}
-                                    transition={{ type: "spring", stiffness: 300 }}
-                                >
-                                    <div className="flex justify-between items-center">
-                                        <div className="flex items-center">
-                                            <div className={`w-10 rounded-full mr-3 aspect-square ${hoveredItem === index ? 'bg-[var(--secondary)] ' : 'bg-[var(--secondary)]/30'} transition-colors duration-300 flex justify-center items-center`}>
-                                                <IonIcon name={item.icon} className="text-[var(--foreground)] relative text-xl" />
-                                            </div>
-                                            <div>
-                                                <span className="font-bold text-[var(--foreground)]">{item.institution}</span>
-                                                <div className="text-sm text-[var(--foreground)]/70 mt-0.5">
-                                                    {item.detail}
-                                                </div>
-                                            </div>
+                        <div className="space-y-6 py-4">
+                            {activeTab === 'education' ? (
+                                education.map((item, index) => (
+                                    <motion.div
+                                        key={index}
+                                        className="relative pl-10 group cursor-default"
+                                        onMouseEnter={() => setHoveredItem(index)}
+                                        onMouseLeave={() => setHoveredItem(null)}
+                                        transition={{ type: "spring", stiffness: 300 }}
+                                    >
+                                        <div className={`absolute left-0 top-0 w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center shadow-sm z-10`}>
+                                            <IonIcon name={item.icon} className={`text-[14px] transition-colors duration-300`} />
                                         </div>
-                                        <span className="text-[var(--foreground)]/70 bg-[var(--secondary)]/20 px-2 py-1 rounded-full text-xs">
-                                            {item.period}
-                                        </span>
-                                    </div>
-                                </motion.div>
-                            ))
-                        ) : (
-                            certifications.map((cert, index) => (
-                                <motion.div
-                                    key={index}
-                                    className="backdrop-blur-sm flex items-center justify-between"
-                                    onMouseEnter={() => setHoveredItem(index)}
-                                    onMouseLeave={() => setHoveredItem(null)}
-                                    transition={{ type: "spring", stiffness: 300 }}
-                                >
-                                    <div className="flex items-center">
-                                        <div className={`w-10 rounded-full mr-3 aspect-square ${hoveredItem === index ? 'bg-[var(--secondary)] ' : 'bg-[var(--secondary)]/30'} transition-colors duration-300 flex justify-center items-center`}>
-                                            <IonIcon name={cert.icon} className="text-[var(--foreground)]" />
+                                        <div className="flex flex-col">
+                                            <span className="font-semibold text-sm text-[var(--foreground)] leading-tight">{item.institution}</span>
+                                            <span className="text-xs text-[var(--foreground)] opacity-50 mt-1">
+                                                {item.period} · {item.detail}
+                                            </span>
                                         </div>
-                                        <span className="font-bold text-[var(--foreground)]">{cert.name}</span>
-                                    </div>
-                                    <div className="bg-[var(--secondary)]/30 backdrop-blur-sm px-2.5 py-1 rounded-full text-xs font-medium text-[var(--foreground)]">
-                                        {cert.year}
-                                    </div>
-                                </motion.div>
-                            ))
-                        )}
+                                    </motion.div>
+                                ))
+                            ) : (
+                                certifications.map((cert, index) => (
+                                    <motion.div
+                                        key={index}
+                                        className="relative pl-10 group cursor-default"
+                                        onMouseEnter={() => setHoveredItem(index)}
+                                        onMouseLeave={() => setHoveredItem(null)}
+                                        transition={{ type: "spring", stiffness: 300 }}
+                                    >
+                                        <div className={`absolute left-0 top-0 w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700 flex items-center justify-center shadow-sm z-10`}>
+                                            <IonIcon name={cert.icon} className={`text-[14px] transition-colors duration-300`} />
+                                        </div>
+                                        <div className="flex flex-col">
+                                            <span className="font-semibold text-sm text-[var(--foreground)] leading-tight">{cert.name}</span>
+                                            <span className="text-xs text-[var(--foreground)] opacity-50 mt-1">
+                                                {cert.year}
+                                            </span>
+                                        </div>
+                                    </motion.div>
+                                ))
+                            )}
+                        </div>
                     </motion.div>
                 </AnimatePresence>
-            </div>
-            <div className="absolute bottom-1 right-1 w-1 h-20 opacity-0 hover:opacity-50 transition-opacity">
-                <div className="w-full h-full rounded-full bg-[var(--foreground)]/20"></div>
             </div>
         </div>
     );
