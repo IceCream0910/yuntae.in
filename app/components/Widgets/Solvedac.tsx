@@ -102,7 +102,7 @@ export default function Solvedac() {
             >
                 <div className="mb-3">
                     <h3 className="text-lg font-bold mb-1">PS를 연습하고 있어요.</h3>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 break-keep text-pretty">백준 티어가 PS 실력을 대변하는 지표는 아니예요. 다양한 문제를 접하며 새로운 접근법을 고민하는 걸 좋아해요.</p>
+                    <p className="text-xs text-gray-500 dark:text-gray-400 break-keep text-pretty">다양한 문제를 접하며 새로운 접근법을 고민하는 걸 좋아해요. 백준 티어가 PS 실력을 대변하는 지표는 아니니 참고용으로만 봐주세요.</p>
                 </div>
 
                 <div className='absolute bottom-0 w-full'>

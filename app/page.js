@@ -16,6 +16,7 @@ import SkillSet from "./components/Widgets/SkillSet";
 import Navy from "./components/Widgets/Navy";
 import History from "./components/Widgets/History";
 import { motion } from "framer-motion";
+import Facts from "./components/Widgets/Facts";
 
 export default function Home() {
   return (
@@ -24,20 +25,20 @@ export default function Home() {
       <main className="min-h-screen pt-16 px-6 pb-24 relative">
         <div className="max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
           <motion.h1 layoutId="main-title">
-          <BlurText
-            text="안녕하세요🖐️"
-            delay={150}
-            animateBy="words"
-            direction="top"
-            className="text-3xl font-black opacity-90 mb-1"
-          />
-          <BlurText
-            text="저는 윤태인입니다."
-            delay={150}
-            animateBy="words"
-            direction="top"
-            className="text-3xl font-black opacity-90 mb-4"
-          />
+            <BlurText
+              text="안녕하세요🖐️"
+              delay={150}
+              animateBy="words"
+              direction="top"
+              className="text-3xl font-black opacity-90 mb-1"
+            />
+            <BlurText
+              text="저는 윤태인입니다."
+              delay={150}
+              animateBy="words"
+              direction="top"
+              className="text-3xl font-black opacity-90 mb-4"
+            />
           </motion.h1>
 
 
@@ -61,7 +62,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card size="1x1">
-              <Hobby />
+              <Facts />
             </Card>
 
             <Card size="1x1">
@@ -74,10 +75,6 @@ export default function Home() {
 
             <Card size="1x1">
               <Clock />
-            </Card>
-
-            <Card size="1x1">
-              <Age />
             </Card>
 
             <Card size="1x1">
@@ -108,7 +105,7 @@ export default function Home() {
               <Navy />
             </Card>
 
-            <Card size="2x1">
+            <Card size="1x1">
               <History />
             </Card>
 
