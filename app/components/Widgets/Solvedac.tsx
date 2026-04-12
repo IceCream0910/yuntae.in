@@ -47,11 +47,53 @@ export default function Solvedac() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                /*
                 const response = await fetch('/api/solvedac');
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
                 const result = await response.json();
+                */
+
+                // Solved.ac API Cloudflare Challenge로 인해 차단됨
+                const result = {
+                    "handle": "taein2370",
+                    "bio": "",
+                    "verified": false,
+                    "badgeId": "marathon_00042",
+                    "backgroundId": "stickers",
+                    "profileImageUrl": "https://static.solved.ac/uploads/profile/taein2370-picture-1701062047394.png",
+                    "solvedCount": 175,
+                    "voteCount": 0,
+                    "class": 3,
+                    "classDecoration": "silver",
+                    "rivalCount": 1,
+                    "reverseRivalCount": 1,
+                    "tier": 13,
+                    "rating": 1160,
+                    "ratingByProblemsSum": 978,
+                    "ratingByClass": 100,
+                    "ratingBySolvedCount": 82,
+                    "ratingByVoteCount": 0,
+                    "overRating": 23240,
+                    "overRatingCutoff": 1,
+                    "arenaTier": 0,
+                    "arenaRating": 0,
+                    "arenaMaxTier": 0,
+                    "arenaMaxRating": 0,
+                    "arenaCompetedRoundCount": 0,
+                    "maxStreak": 6,
+                    "coins": 1,
+                    "stardusts": 1390,
+                    "joinedAt": "2023-11-27T05:08:51.103Z",
+                    "bannedUntil": "1970-01-01T00:00:00.000Z",
+                    "proUntil": "1970-01-01T00:00:00.000Z",
+                    "rank": 35428,
+                    "isRival": false,
+                    "isReverseRival": false,
+                    "blocked": false,
+                    "reverseBlocked": false
+                }
                 setData(result);
             } catch (err) {
                 setError(err.message);
@@ -129,13 +171,13 @@ export default function Solvedac() {
                                     </div>
                                 </div>
                                 <div className="text-sm opacity-70">
-                                    Rating: {data.rating.toLocaleString()}
+                                    Rating: {data.rating}
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div className="text-sm opacity-50">Rank #{data.rank.toLocaleString()}</div>
+                    <div className="text-sm opacity-50">Rank #{data.rank}</div>
                     <div className="text-sm opacity-50">푼 문제 수: <CountUp
                         from={0}
                         to={data.solvedCount}
