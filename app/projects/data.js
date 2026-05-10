@@ -62,7 +62,7 @@ export default [
         "pin": true,
         "summary": "광운대학교 KLAS 앱의 기능과 UI를 추가 및 수정한 안드로이드 앱.",
         "thumbnail": "https://i.imgur.com/75Ry7IV.png",
-        "blogPostUrl": "https://blog.yuntae.in/embed/109fc9b9-3eca-801c-8473-f4b5cdb5b3c0",
+        "blogPostUrl": "https://blog.yuntae.in/embed/109fc9b93eca801c8473f4b5cdb5b3c0",
         "links": [
             {
                 "name": "Play Store",
@@ -88,7 +88,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "3,500+"
+                "value": "4,500+"
             },
             {
                 "name": "기여도",
@@ -134,7 +134,7 @@ export default [
             },
             {
                 "name": "사용자",
-                "value": "16,000+"
+                "value": "25,000+"
             },
             {
                 "name": "기여도",
@@ -217,10 +217,6 @@ export default [
             {
                 "name": "상태",
                 "value": "서비스 중"
-            },
-            {
-                "name": "사용자",
-                "value": "2,000+"
             },
             {
                 "name": "기여도",
