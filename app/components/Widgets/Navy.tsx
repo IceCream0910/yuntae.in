@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import IonIcon from '@reacticons/ionicons';
 import CountUp from '../CountUp';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 export default function Navy() {
     const [progress, setProgress] = useState(0);
@@ -44,7 +44,7 @@ export default function Navy() {
         calculateProgress();
     }, []);
 
-    const waveVariants = {
+    const waveVariants: Variants = {
         animate: {
             x: [0, -100],
             transition: {
@@ -58,7 +58,7 @@ export default function Navy() {
         }
     };
 
-    const waveVariants2 = {
+    const waveVariants2: Variants = {
         animate: {
             x: [0, -100],
             transition: {
@@ -72,7 +72,7 @@ export default function Navy() {
         }
     };
 
-    const topWaveVariants = {
+    const topWaveVariants: Variants = {
         animate: {
             x: [-100, -50],
             y: [-4, 4, -4],
@@ -87,7 +87,7 @@ export default function Navy() {
         }
     };
 
-    const boatVariants = {
+    const boatVariants: Variants = {
         animate: {
             y: [0, -4, 0],
             rotate: [0, 1, 0, -1, 0],
@@ -110,7 +110,7 @@ export default function Navy() {
 
 
     // Seagull animation variants
-    const seagullVariants = {
+    const seagullVariants: Variants = {
         animate: {
             x: [-20, 100],
             transition: {
