@@ -29,64 +29,61 @@ export default function Home() {
               text="안녕하세요🖐️"
               delay={150}
               animateBy="words"
-              direction="top"
+              direction="bottom"
               className="text-3xl font-black opacity-90 mb-1"
             />
             <BlurText
               text="저는 윤태인입니다."
               delay={150}
               animateBy="words"
-              direction="top"
+              direction="bottom"
               className="text-3xl font-black opacity-90 mb-4"
             />
           </motion.h1>
 
+          <BlurText
+            text="사람을 향한 기술과 서비스로 세상의 불편함을 해결하려는 소프트웨어 엔지니어입니다."
+            delay={50}
+            animateBy="words"
+            direction="bottom"
+            className="text-lg font-light opacity-60 mb-3"
+          />
 
           <div className="flex space-x-4 mb-8">
             <a href="https://github.com/icecream0910"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-lg font-medium text-gray-500 hover:text-gray-400"
-            > Github </a>
+              className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
+            > Github</a>
             <a href="https://blog.yuntae.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-lg font-medium text-gray-500 hover:text-gray-400"
-            > Blog </a>
+              className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
+            > Blog</a>
             <a href="mailto:hey@yuntae.in"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-lg font-medium text-gray-500 hover:text-gray-400"
-            > Email </a>
+              className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
+            > Email</a>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card size="1x1">
-              <Facts />
-            </Card>
 
-            <Card size="1x1">
-              <Music />
-            </Card>
 
             <Card size="1x1">
               <SkillSet />
             </Card>
 
             <Card size="1x1">
-              <Clock />
+              <History />
             </Card>
 
             <Card size="1x1">
-              <Photo />
+              <Facts />
             </Card>
 
             <Card size="1x1">
-              <Mbti />
-            </Card>
-
-            <Card size="1x1">
-              <Quote />
+              <Music />
             </Card>
 
             <Card size="1x1">
@@ -102,13 +99,24 @@ export default function Home() {
             </Card>
 
             <Card size="1x1">
-              <Navy />
+              <Clock />
             </Card>
 
             <Card size="1x1">
-              <History />
+              <Photo />
             </Card>
 
+            <Card size="1x1">
+              <Quote />
+            </Card>
+
+            <Card size="1x1">
+              <Mbti />
+            </Card>
+
+            <Card size="1x1">
+              <Navy />
+            </Card>
           </div>
         </div>
       </main>
