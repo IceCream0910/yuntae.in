@@ -1,6 +1,7 @@
 "use client";
 import Card from "./components/Card";
 import NavBar from "./components/NavBar";
+import { useState } from "react";
 import BlurText from "./components/BlurText";
 import Clock from "./components/Widgets/Clock";
 import Music from "./components/Widgets/Music";
@@ -19,6 +20,22 @@ import { motion } from "framer-motion";
 import Facts from "./components/Widgets/Facts";
 
 export default function Home() {
+  const [factsCardRevealed, setFactsCardRevealed] = useState(false);
+  const cards = [
+    <SkillSet key="skills" />,
+    <History key="history" />,
+    <Facts key="facts" startAnimation={factsCardRevealed} />,
+    <Music key="music" />,
+    <Github key="github" />,
+    <Solvedac key="solvedac" />,
+    <Routine key="routine" />,
+    <Clock key="clock" />,
+    <Photo key="photo" />,
+    <Quote key="quote" />,
+    <Mbti key="mbti" />,
+    <Navy key="navy" />,
+  ];
+
   return (
     <>
       <NavBar activeTab={0} />
@@ -70,53 +87,16 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
 
-            <Card size="1x1">
-              <SkillSet />
-            </Card>
-
-            <Card size="1x1">
-              <History />
-            </Card>
-
-            <Card size="1x1">
-              <Facts />
-            </Card>
-
-            <Card size="1x1">
-              <Music />
-            </Card>
-
-            <Card size="1x1">
-              <Github />
-            </Card>
-
-            <Card size="1x1">
-              <Solvedac />
-            </Card>
-
-            <Card size="1x1">
-              <Routine />
-            </Card>
-
-            <Card size="1x1">
-              <Clock />
-            </Card>
-
-            <Card size="1x1">
-              <Photo />
-            </Card>
-
-            <Card size="1x1">
-              <Quote />
-            </Card>
-
-            <Card size="1x1">
-              <Mbti />
-            </Card>
-
-            <Card size="1x1">
-              <Navy />
-            </Card>
+            {cards.map((widget, index) => (
+              <Card
+                key={widget.key}
+                size="1x1"
+                index={index}
+                onReveal={index === 2 ? () => setFactsCardRevealed(true) : undefined}
+              >
+                {widget}
+              </Card>
+            ))}
           </div>
         </div>
       </main>
