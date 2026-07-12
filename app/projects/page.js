@@ -19,18 +19,18 @@ export default function Home() {
                         <a href="https://github.com/icecream0910"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-lg font-medium text-gray-500 hover:text-gray-400"
-                        > Github </a>
+                            className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
+                        > Github</a>
                         <a href="https://blog.yuntae.in"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-lg font-medium text-gray-500 hover:text-gray-400"
-                        > Blog </a>
+                            className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
+                        > Blog</a>
                         <a href="mailto:hey@yuntae.in"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-lg font-medium text-gray-500 hover:text-gray-400"
-                        > Email </a>
+                            className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
+                        > Email</a>
                     </div>
 
                     <ProjectsWrapper />

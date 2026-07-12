@@ -8,6 +8,8 @@
   --background: #ffffff;
   --secondary: #f7f7f9;
   --foreground: #171717;
+  --scrollbar-thumb: rgba(23, 23, 23, 0.22);
+  --scrollbar-thumb-hover: rgba(23, 23, 23, 0.38);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,6 +17,8 @@
     --background: #0a0a0a;
     --secondary: #27272a;
     --foreground: #ededed;
+    --scrollbar-thumb: rgba(237, 237, 237, 0.22);
+    --scrollbar-thumb-hover: rgba(237, 237, 237, 0.38);
   }
 }
 
@@ -35,4 +39,31 @@ body {
 .link {
   text-decoration: underline;
   text-decoration-style: dotted;
+}
+
+.project-modal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+.project-modal-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.project-modal-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 24px;
+}
+
+.project-modal-scrollbar::-webkit-scrollbar-thumb {
+  min-height: 48px;
+  border: 3px solid transparent;
+  border-radius: 999px;
+  background: var(--scrollbar-thumb);
+  background-clip: padding-box;
+}
+
+.project-modal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+  background-clip: padding-box;
 }

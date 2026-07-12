@@ -9,6 +9,7 @@ interface LazyImageProps {
   layoutId?: string;
   aspectRatio?: string;
   blurDataURL?: string;
+  placeholderSrc?: string;
 }
 
 export default function LazyImage({ 
@@ -17,7 +18,8 @@ export default function LazyImage({
   className = '', 
   layoutId,
   aspectRatio = '16/9',
-  blurDataURL
+  blurDataURL,
+  placeholderSrc,
 }: LazyImageProps) {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isInView, setIsInView] = useState(false);
@@ -54,11 +56,12 @@ export default function LazyImage({
       style={{ aspectRatio }}
     >
       {/* Blur placeholder */}
-      {!isLoaded && isInView && blurDataURL && (
+      {!isLoaded && isInView && (placeholderSrc || blurDataURL) && (
         <img
-          src={blurDataURL}
-          alt={alt}
-          className="absolute inset-0 w-full h-full object-cover blur-xl scale-110"
+          src={placeholderSrc || blurDataURL}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full object-cover blur-xl scale-110 opacity-80"
         />
       )}
       

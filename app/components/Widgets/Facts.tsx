@@ -3,7 +3,7 @@ import IonIcon from '@reacticons/ionicons';
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Facts() {
+export default function Facts({ startAnimation = true }: { startAnimation?: boolean }) {
     const today = new Date();
     const birthDate = new Date('2005-09-10');
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -83,7 +83,7 @@ export default function Facts() {
 
             <div className="flex-1 mt-2 overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar">
                 <AnimatePresence mode="wait">
-                    {fact && (
+                    {fact && startAnimation && (
                         <motion.h2
                             key={currentIndex}
                             className="relative text-xl sm:text-xl md:text-2xl break-keep text-pretty"
