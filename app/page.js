@@ -41,30 +41,13 @@ export default function Home() {
       <NavBar activeTab={0} />
       <main className="min-h-screen pt-16 px-6 pb-24 relative">
         <div className="max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
-          <motion.h1 layoutId="main-title">
-            <BlurText
-              text="안녕하세요🖐️"
-              delay={150}
-              animateBy="words"
-              direction="bottom"
-              className="text-3xl font-black opacity-90 mb-1"
-            />
-            <BlurText
-              text="저는 윤태인입니다."
-              delay={150}
-              animateBy="words"
-              direction="bottom"
-              className="text-3xl font-black opacity-90 mb-4"
-            />
+          <motion.h1 layoutId="main-title" className="text-3xl font-black opacity-90 mb-3">
+            안녕하세요🖐️<br />저는 윤태인입니다.
           </motion.h1>
 
-          <BlurText
-            text="사람을 향한 기술과 서비스로 세상의 불편함을 해결하려는 소프트웨어 엔지니어입니다."
-            delay={50}
-            animateBy="words"
-            direction="bottom"
-            className="text-lg font-light opacity-60 mb-3"
-          />
+          <p className="text-lg font-light opacity-60 mb-3">
+            사람을 향한 기술과 서비스로 세상의 불편함을 해결하려는 소프트웨어 엔지니어입니다.
+          </p>
 
           <div className="flex space-x-4 mb-8">
             <a href="https://github.com/icecream0910"

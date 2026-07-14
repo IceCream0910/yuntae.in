@@ -32,6 +32,8 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
     const [isSelected, setIsSelected] = useState(false);
     const [isReady, setIsReady] = useState(false);
     const [iframeHeight, setIframeHeight] = useState("620px");
+    const [isModalExpanded, setIsModalExpanded] = useState(false);
+    const [isIframeLoaded, setIsIframeLoaded] = useState(false);
     const screenshotsRef = useRef<HTMLDivElement>(null);
     const shouldReduceMotion = useReducedMotion();
     const placeholderSrc = getPlaceholderUrl(props.thumbnail);
@@ -42,7 +44,11 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
     }, []);
 
     useEffect(() => {
-        if (!isSelected) return;
+        if (!isSelected) {
+            setIsModalExpanded(false);
+            setIsIframeLoaded(false);
+            return;
+        }
 
         const previousOverflow = document.body.style.overflow;
         document.body.style.overflow = "hidden";
@@ -67,6 +73,19 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
             window.removeEventListener("message", resizeIframe);
         };
     }, [isSelected]);
+
+    useEffect(() => {
+        if (!isSelected || isModalExpanded) return;
+
+        // Layout completion is the primary trigger; this also covers reduced-motion
+        // environments and browsers that skip a shared-layout animation frame.
+        const fallbackTimer = window.setTimeout(
+            () => setIsModalExpanded(true),
+            shouldReduceMotion ? 0 : 450,
+        );
+
+        return () => window.clearTimeout(fallbackTimer);
+    }, [isSelected, isModalExpanded, shouldReduceMotion]);
 
     if (!data || !isReady) return null;
 
@@ -142,6 +161,7 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                             aria-labelledby={`project-title-${title}`}
                             className="project-modal-scrollbar relative h-[100dvh] w-full max-w-5xl overflow-y-auto rounded-t-[2rem] bg-[var(--background)] shadow-2xl md:h-[min(90dvh,900px)] md:rounded-[2rem]"
                             transition={{ duration: shouldReduceMotion ? 0 : 0.4, ease: [0.22, 1, 0.36, 1] }}
+                            onLayoutAnimationComplete={() => setIsModalExpanded(true)}
                         >
                             <header className="sticky top-0 z-[9999] flex items-center justify-end px-5 py-5 md:px-8">
                                 <button
@@ -209,10 +229,34 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                                 ) : null}
 
                                 {data.blogPostUrl && (
-                                    <section className="mx-auto mt-12 max-w-4xl border-t border-black/[0.07] pt-8 dark:border-white/10">
+                                    <section
+                                        className="mx-auto mt-12 max-w-4xl border-t border-black/[0.07] pt-8 dark:border-white/10"
+                                        aria-busy={!isIframeLoaded}
+                                    >
                                         <span className="text-xs font-bold uppercase tracking-widest opacity-40">Story</span>
                                         <h2 className="mb-4 text-xl font-bold">프로젝트 상세</h2>
-                                        <iframe src={data.blogPostUrl} className="w-full border-0" title={`${title} 상세 글`} style={{ height: iframeHeight }} />
+                                        <div className="relative min-h-[620px] overflow-hidden">
+                                            {!isIframeLoaded && (
+                                                <div className="absolute inset-0 z-10 animate-pulse bg-[var(--secondary)] p-6" aria-hidden="true">
+                                                    <div className="h-6 w-2/5 rounded-full bg-black/[0.07] dark:bg-white/10" />
+                                                    <div className="mt-7 space-y-3">
+                                                        <div className="h-3 w-full rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
+                                                        <div className="h-3 w-11/12 rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
+                                                        <div className="h-3 w-4/5 rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
+                                                    </div>
+                                                    <div className="mt-10 aspect-video w-full rounded-xl bg-black/[0.055] dark:bg-white/[0.07]" />
+                                                </div>
+                                            )}
+                                            {isModalExpanded && (
+                                                <iframe
+                                                    src={data.blogPostUrl}
+                                                    className={`w-full border-0 transition-opacity duration-300 ${isIframeLoaded ? "opacity-100" : "opacity-0"}`}
+                                                    title={`${title} 상세 글`}
+                                                    style={{ height: iframeHeight }}
+                                                    onLoad={() => setIsIframeLoaded(true)}
+                                                />
+                                            )}
+                                        </div>
                                     </section>
                                 )}
                             </div>
