@@ -2,22 +2,12 @@
 import IonIcon from '@reacticons/ionicons';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { certifications, education } from '../../data/profile';
 
 export default function History() {
     const [activeTab, setActiveTab] = useState<'education' | 'certification'>('education');
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
     const boxRef = useRef<HTMLDivElement>(null);
-
-    const education = [
-        { institution: '성일고등학교', detail: '일반 인문계', period: '2021~2024', icon: 'school-outline' as const },
-        { institution: '광운대학교', detail: '인공지능융합대학 소프트웨어학부', period: '2024~', icon: 'laptop-outline' as const },
-    ];
-
-    const certifications = [
-        { name: '정보처리기능사 (현.프로그래밍기능사)', year: '2017', icon: 'code-slash-outline' as const },
-        { name: '컴퓨터활용능력 2급', year: '2016', icon: 'desktop-outline' as const },
-        { name: 'GTQ 그래픽기술자격 1급', year: '2017', icon: 'brush-outline' as const },
-    ];
 
     return (
         <div className="relative w-full h-full flex flex-col" ref={boxRef}>

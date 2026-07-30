@@ -2,7 +2,7 @@ export default [
     {
         "title": "무~야호~",
         "category": "Web",
-        "pin": true,
+        "pin": false,
         "icon": "https://i.imgur.com/QqMpJvU.png",
         "summary": "세상의 모든 무도짤, 여기서 검색. AI 기반 자연어 짤 검색 서비스",
         "thumbnail": "https://i.imgur.com/f0AyXbA.png",
@@ -31,7 +31,7 @@ export default [
     {
         "title": "Weekly Brief",
         "category": "Web",
-        "pin": true,
+        "pin": false,
         "summary": "AI가 한 주 동안의 세상사를 요약해드립니다.",
         "thumbnail": "https://i.imgur.com/Z1nJEjJ.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca806ba967c630d144f345",
@@ -289,7 +289,7 @@ export default [
     {
         "title": "쏙",
         "category": ["App", "Web"],
-        "pin": false,
+        "pin": true,
         "summary": "성일고등학교의 급식, 시간표, 학사일정 등 정보를 한 눈에 볼 수 있는 서비스.",
         "thumbnail": "https://i.imgur.com/mTbeaJo.png",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca80299447cd021ec59ee0",
@@ -516,7 +516,7 @@ export default [
     {
         "title": "코로나콕",
         "category": ["App", "Web"],
-        "pin": false,
+        "pin": true,
         "thumbnail": "https://i.imgur.com/gnUk2Fe.png",
         "summary": "코로나19 현황과 정보를 시각화하여 보여주는 대시보드",
         "blogPostUrl": "https://blog.yuntae.in/embed/1d8fc9b93eca8047a35ae16e1657511e",

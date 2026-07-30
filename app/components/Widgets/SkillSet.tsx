@@ -2,17 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import StackIcon from "tech-stack-icons";
-
-interface Skill {
-    name: string;
-    iconName: string;
-    featured?: boolean;
-}
-
-interface Category {
-    title: string;
-    skills: Skill[];
-}
+import { skillCategories } from "../../data/profile";
 
 const SkillSet = () => {
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -34,79 +24,6 @@ const SkillSet = () => {
         return () => window.removeEventListener("resize", handleScroll);
     }, []);
 
-    const categories: Category[] = [
-        {
-            title: "Languages",
-            skills: [
-                { name: "JavaScript", iconName: "nodejs", featured: true },
-                { name: "TypeScript", iconName: "typescript" },
-                { name: "Kotlin", iconName: "kotlin" },
-                { name: "Java", iconName: "java", featured: true },
-                { name: "Python", iconName: "python" },
-                { name: "C", iconName: "c++" },
-            ]
-        },
-        {
-            title: "Web",
-            skills: [
-                { name: "NextJS", iconName: "nextjs2", featured: true },
-                { name: "ReactJS", iconName: "react" },
-                { name: "Tailwindcss", iconName: "tailwindcss", featured: true },
-                { name: "PWA", iconName: "pwa" }
-            ]
-        },
-        {
-            title: "Mobile",
-            skills: [
-                { name: "Android", iconName: "android", featured: true },
-                { name: "Jetpack Compose", iconName: "webpack" },
-                { name: "React Native", iconName: "reactnative" },
-            ]
-        },
-        {
-            title: "Backend",
-            skills: [
-                { name: "NodeJS(Express)", iconName: "nodejs2", featured: true },
-                { name: "NestJS", iconName: "nestjs" },
-                { name: "Spring Boot", iconName: "spring" },
-                { name: "FastAPI", iconName: "fastgpt" }
-            ]
-        },
-        {
-            title: "Database",
-            skills: [
-                { name: "Firebase", iconName: "firebase" },
-                { name: "Supabase", iconName: "supabase" },
-                { name: "MongoDB", iconName: "mongodb" },
-                { name: "MySQL", iconName: "mysql" },
-                { name: "Redis", iconName: "redis" },
-            ]
-        },
-        {
-            title: "DevOps",
-            skills: [
-                { name: "Oracle cloud", iconName: "oracle" },
-                { name: "Cloudflare", iconName: "cloudflare" },
-                { name: "AWS", iconName: "aws" },
-                { name: "Docker", iconName: "docker" },
-                { name: "Git", iconName: "git" },
-                { name: "GitHub Actions", iconName: "github" },
-                { name: "Traefik", iconName: "traefikproxy" },
-                { name: "Vercel", iconName: "vercel" },
-                { name: "Notion", iconName: "notion" },
-            ]
-        },
-        {
-            title: "AI",
-            skills: [
-                { name: "Claude", iconName: "claude" },
-                { name: "Codex", iconName: "openai" },
-                { name: "Hugging Face", iconName: "huggingface" },
-                { name: "Ollama", iconName: "ollama" }
-            ]
-        }
-    ];
-
     return (
         <div className="relative w-full h-full flex flex-col overflow-hidden">
             <div className="flex-shrink-0 mb-3.5 relative z-10">
@@ -121,10 +38,10 @@ const SkillSet = () => {
                     onScroll={handleScroll}
                     className="flex-1 overflow-y-auto pr-0.5 no-scrollbar flex flex-col select-none"
                 >
-                    {categories.map((category, index) => (
+                    {skillCategories.map((category, index) => (
                         <div
                             key={category.title}
-                            className={`flex flex-col ${index !== categories.length - 1
+                            className={`flex flex-col ${index !== skillCategories.length - 1
                                 ? "border-b border-gray-100/70 dark:border-zinc-800/40 pb-3.5"
                                 : "pb-4"
                                 }`}

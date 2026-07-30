@@ -18,6 +18,7 @@ import Navy from "./components/Widgets/Navy";
 import History from "./components/Widgets/History";
 import { motion } from "framer-motion";
 import Facts from "./components/Widgets/Facts";
+import SocialLinks from "./components/SocialLinks";
 
 export default function Home() {
   const [factsCardRevealed, setFactsCardRevealed] = useState(false);
@@ -41,31 +42,17 @@ export default function Home() {
       <NavBar activeTab={0} />
       <main className="min-h-screen pt-16 px-6 pb-24 relative">
         <div className="max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
-          <motion.h1 layoutId="main-title" className="text-3xl font-black opacity-90 mb-3">
-            안녕하세요🖐️<br />저는 윤태인입니다.
-          </motion.h1>
+          <div className="mb-3 flex items-start justify-between gap-5">
+            <motion.h1 layoutId="main-title" className="text-3xl font-black opacity-90">
+              안녕하세요🖐️<br />저는 윤태인입니다.
+            </motion.h1>
+          </div>
 
           <p className="text-lg font-light opacity-60 mb-3">
             사람을 향한 기술과 서비스로 세상의 불편함을 해결하려는 소프트웨어 엔지니어입니다.
           </p>
 
-          <div className="flex space-x-4 mb-8">
-            <a href="https://github.com/icecream0910"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
-            > Github</a>
-            <a href="https://blog.yuntae.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
-            > Blog</a>
-            <a href="mailto:hey@yuntae.in"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
-            > Email</a>
-          </div>
+          <SocialLinks className="mb-8" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 

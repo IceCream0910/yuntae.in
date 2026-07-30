@@ -3,6 +3,7 @@ import React from 'react';
 import NavBar from '../components/NavBar';
 import ProjectsWrapper from './ProjectsWrapper';
 import { motion } from 'framer-motion';
+import SocialLinks from '../components/SocialLinks';
 
 export default function Home() {
     return (
@@ -15,23 +16,7 @@ export default function Home() {
                         뚝딱뚝딱 만들고 있어요.
                     </motion.h1>
 
-                    <div className="flex space-x-4 mb-8">
-                        <a href="https://github.com/icecream0910"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
-                        > Github</a>
-                        <a href="https://blog.yuntae.in"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
-                        > Blog</a>
-                        <a href="mailto:hey@yuntae.in"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-lg font-medium text-gray-500 underline decoration-dotted decoration-zinc-400 dark:decoration-zinc-600 hover:text-gray-400"
-                        > Email</a>
-                    </div>
+                    <SocialLinks className="mb-8" />
 
                     <ProjectsWrapper />
                 </div>
