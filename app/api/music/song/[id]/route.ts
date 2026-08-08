@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
 
 const allowedOrigins = [
-    'http://localhost',
-    'http://127.0.0.1',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000',
     'https://music.yuntae.in',
     'https://yuntae.in',
     'https://noa.kim',
     'https://www.noa.kim',
-    'https://music.noa.kim'
+    'https://music.noa.kim',
+    'https://blog.yuntae.in'
 ];
 
 function setCorsHeaders(request, response) {
