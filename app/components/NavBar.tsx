@@ -10,7 +10,7 @@ const NavBar = ({ activeTab }: { activeTab: number }) => {
     ];
 
     return (<>
-        <div className="fixed bottom-0 left-0 right-0 z-[100] flex justify-center items-center w-full p-12 backdrop-blur-sm" style={{ WebkitMaskImage: 'linear-gradient(to top, var(--background) 55%, rgba(0, 0, 0, 0) 100%)', maskImage: 'linear-gradient(to top, var(--background) 55%, rgba(0, 0, 0, 0) 100%)' }}>
+        <div className="pointer-events-none fixed bottom-0 left-0 right-0 z-[100] flex justify-center items-center w-full p-12 backdrop-blur-sm" style={{ WebkitMaskImage: 'linear-gradient(to top, var(--background) 55%, rgba(0, 0, 0, 0) 100%)', maskImage: 'linear-gradient(to top, var(--background) 55%, rgba(0, 0, 0, 0) 100%)' }}>
         </div>
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100]">
             <div className="flex gap-1 p-2 rounded-full bg-[var(--background)] border-gray-500 shadow-md">

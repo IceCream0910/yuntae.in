@@ -1,10 +1,11 @@
 "use client";
 import IonIcon from '@reacticons/ionicons';
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { certifications, education } from '../../data/profile';
 
 export default function History() {
+    const reduce = useReducedMotion();
     const [activeTab, setActiveTab] = useState<'education' | 'certification'>('education');
     const [hoveredItem, setHoveredItem] = useState<number | null>(null);
     const boxRef = useRef<HTMLDivElement>(null);
@@ -16,10 +17,11 @@ export default function History() {
                 <div className="w-1.5 h-1.5 rounded-full bg-[var(--secondary)] opacity-30"></div>
             </div>
 
-            <div className="flex mb-4">
-                <div className="flex bg-[var(--secondary)]/20 rounded-full p-1 backdrop-blur-sm">
+            <div className="mb-4 flex items-center justify-between gap-2">
+                <div className="flex bg-[var(--widget-control)] rounded-full p-1">
                     <button
                         onClick={() => setActiveTab('education')}
+                        aria-pressed={activeTab === 'education'}
                         className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${activeTab === 'education'
                             ? 'bg-black/70 dark:bg-white text-[var(--background)] shadow-sm'
                             : 'text-[var(--foreground)]/70'
@@ -29,6 +31,7 @@ export default function History() {
                     </button>
                     <button
                         onClick={() => setActiveTab('certification')}
+                        aria-pressed={activeTab === 'certification'}
                         className={`px-3 py-1 rounded-full text-sm font-medium transition-all duration-300 ${activeTab === 'certification'
                             ? 'bg-black/70 dark:bg-white text-[var(--background)] shadow-sm'
                             : 'text-[var(--foreground)]/70'
@@ -51,9 +54,9 @@ export default function History() {
                             scrollbarWidth: 'none',
                         }}
                         key={activeTab}
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: reduce ? 0 : 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
+                        exit={{ opacity: 0, y: reduce ? 0 : -10 }}
                         transition={{ duration: 0.3 }}
                     >
                         <div className="space-y-6 py-4">

@@ -1,84 +1,39 @@
 "use client";
-import React, { useEffect, useState } from 'react';
-import { prominent } from 'color.js';
-import IonIcon from '@reacticons/ionicons';
-import Card from '../Card';
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
-const Music = () => {
-    const [musicData, setMusicData] = useState({
-        artwork: '',
-        artist: '',
-        title: '',
-        url: ''
-    });
-    const [isLoading, setIsLoading] = useState(true);
-
+export default function Music() {
+    const [track, setTrack] = useState<{ artwork: string; title: string; artist: string } | null>(null);
+    const [error, setError] = useState(false);
+    const reduce = useReducedMotion();
     useEffect(() => {
-        const fetchMusicData = async () => {
-            setIsLoading(true);
-            try {
-                const response = await fetch('/api/music/recent');
-                const { data } = await response.json();
-                const track = data[0].attributes;
-
-                const artworkUrl = track.artwork.url.replace('{w}x{h}', '400x400');
-
-                setMusicData({
-                    artwork: artworkUrl,
-                    artist: track.artistName,
-                    title: track.name,
-                    url: track.previews[0].url
-                });
-                setIsLoading(false);
-            } catch (error) {
-                console.error('Failed to fetch music data:', error);
-                setIsLoading(false);
-            }
-        };
-
-        fetchMusicData();
+        const controller = new AbortController();
+        fetch("/api/music/recent", { signal: controller.signal }).then(response => {
+            if (!response.ok) throw new Error("Music unavailable");
+            return response.json();
+        }).then(({ data }) => {
+            const song = data[0].attributes;
+            setTrack({ artwork: song.artwork.url.replace("{w}", "400").replace("{h}", "400"), title: song.name, artist: song.artistName });
+        }).catch(() => { if (!controller.signal.aborted) setError(true); });
+        return () => controller.abort();
     }, []);
-
     return (
-        <>
-            <div className="flex-1 relative -top-[20%] flex justify-center items-center">
-                <div className="w-50 h-50 rounded-full absolute 
-                    bg-gradient-to-r from-gray-800 to-gray-900
-                    shadow-lg flex items-center justify-center">
-                    <div className="w-10 h-10 rounded-full bg-[var(--secondary)]
-                        absolute z-20 shadow-inner border border-gray-700" />
+        <div className="relative flex h-full flex-col">
+            <div className="relative flex min-h-0 flex-1 items-center justify-center py-2">
+                <motion.div className="music-record relative flex aspect-square h-full max-h-[210px] items-center justify-center rounded-full" whileHover={reduce ? undefined : { rotate: 35 }} transition={{ type: "spring", stiffness: 50, damping: 15 }}>
+                    {track ? <img src={track.artwork} alt={`${track.title} 앨범 커버`} className="h-full w-full rounded-full object-cover" /> : <div className="h-[56%] w-[56%] rounded-full bg-[#bf7768]" />}
+                    <span className="absolute h-3 w-3 rounded-full border-2 border-white/30 bg-[#252529]" />
+                </motion.div>
+            </div>
+            <div className="z-10 flex items-end justify-between">
+                <div className="z-10 pt-3">
+                    <p className="widget-muted mb-1 text-[10px]">최근 들은 노래</p>
+                    <h3 className="truncate text-xl font-bold tracking-tight">{track?.title ?? (error ? "잠시 쉬어가는 중" : "음악 불러오는 중…")}</h3>
+                    <p className="widget-muted truncate text-xs">{track?.artist ?? (error ? "최근 재생 정보를 가져오지 못했어요" : "Apple Music")}</p>
                 </div>
-
-                {musicData.artwork && (
-                    <div className="w-50 h-50 rounded-full bg-slate-50 overflow-hidden absolute hover:animate-spin"
-                        style={{ animationDuration: '8s', animationTimingFunction: 'linear' }}>
-                        <img
-                            src={isLoading ? "https://rukminim2.flixcart.com/image/750/900/kwgpz0w0/paper/0/k/q/black-1-coloured-paper-sharma-business-original-imag94z6y4smhcz7.jpeg?q=20&crop=false" : musicData.artwork}
-                            alt={musicData.title || 'Album artwork'}
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                )}
+                <a href="https://music.yuntae.in" target="_blank" rel="noreferrer" className="widget-icon-button" aria-label="음악 사이트 열기">↗</a>
             </div>
 
-            <div className='w-full relative top-10'>
-                <span className="text-xs opacity-50">
-                    <span className='emoji'>🎧</span> 최근 들은 노래
-                </span>
-                <h3 className="text-lg font-semibold truncate mt-1">
-                    {musicData.title || 'Loading...'}
-                </h3>
-                <p className="m-0 -mt-1 text-sm text-gray-400 truncate">
-                    {musicData.artist || '플레이리스트에 연결 중'}
-                </p>
-
-                <button className="relative float-right -top-9 bg-black/15 dark:bg-black/50 flex items-center justify-center rounded-full p-2 hover:bg-black/30 dark:hover:bg-black/30"
-                    onClick={() => window.open("https://music.yuntae.in", '_blank')}>
-                    <IonIcon name="add" className="text-[var(--foreground)] text-xl" />
-                </button>
-            </div>
-        </>
+        </div>
     );
-};
-
-export default Music;
+}

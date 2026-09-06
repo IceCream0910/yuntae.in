@@ -1,9 +1,10 @@
 "use client";
 import IonIcon from '@reacticons/ionicons';
 import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 export default function Facts({ startAnimation = true }: { startAnimation?: boolean }) {
+    const reduce = useReducedMotion();
     const today = new Date();
     const birthDate = new Date('2005-09-10');
     let age = today.getFullYear() - birthDate.getFullYear();
@@ -21,8 +22,8 @@ export default function Facts({ startAnimation = true }: { startAnimation?: bool
         "LLM 🤖 등 **AI 도구**를 적극 활용해 개발 **자동화 환경** ⚙️ 을 구축해보고 있어요. 새로운 개발 패러다임 속에서 **소프트웨어 엔지니어** 🧑‍💻 의 역할을 항상 고민합니다.",
         "단순히 기능이 동작하는 데서 멈추지 않고, 버그 🐞 를 찾아 해결하거나 **성능 최적화** ⚡ 같은 유지보수 과정도 놓치지 않고 꼼꼼히 챙깁니다.",
         "수만 명 이상의 실사용자를 보유한 서비스를 **직접 운영** 👥 해봤어요. 덕분에 프로덕션 레벨에서의 **안정성** 🛡️ 확보와 **보안** 🔒 설계의 중요성을 이해하고 있습니다.",
-        "**피아노** 🎹 와 **기타** 🎸 연주가 취미예요. 정해진 악보를 따라가기보다는, 좋아하는 노래의 멜로디를 듣고 **청음** 🎶 으로 자유롭게 연주하는 것을 즐깁니다.",
-        "예쁜 가삿말과 감성적인 멜로디를 가진 **인디 밴드 음악** 🎵 을 즐겨 들어요. 코딩할 때나 쉴 때나 음악 🎧 은 저에게 빼놓을 수 없는 좋은 동료이죠.",
+        "**피아노** 🎹 와 **기타** 🎸 연주가 취미예요. 정해진 악보를 따라가기보다는, 좋아하는 노래의 멜로디를 듣고 **청음** 으로 자유롭게 연주하는 것을 즐깁니다.",
+        "예쁜 가삿말과 감성적인 멜로디를 가진 **인디 밴드 음악** 🎹 을 즐겨 들어요. 코딩할 때나 쉴 때나 음악 🎧 은 저에게 빼놓을 수 없는 좋은 동료이죠.",
         "기술과 인간의 본질적인 관계에 대해 호기심이 많아요. **SF 영화** 🛸 나 **소설** 📖 을 감상하며 다가올 미래 기술에 대한 **영감** 🔮 을 얻곤 합니다.",
         "무심코 지나칠 수 있는 일상적인 풍경들을 저만의 **새로운 시선**으로 **카메라** 📸 에 담으며, 시각적인 아름다움이 주는 작은 힐링 🌿 을 즐겨요.",
         "주변에서 **불편함**을 발견하면 그냥 넘기지 않아요. 제가 가진 **기술** 🛠️ 로 어떻게 가치를 창출하고 해결할 수 있을지 고민한 뒤 빠르게 **실행** 🏃‍♂️ 에 옮깁니다.",
@@ -79,14 +80,14 @@ export default function Facts({ startAnimation = true }: { startAnimation?: bool
 
     return (
         <div className="relative w-full h-full flex flex-col">
-            <span className='text-sm text-gray-500'>태인의 TMI</span>
+            <span className="widget-eyebrow">TMI about me.</span>
 
-            <div className="flex-1 mt-2 overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar">
+            <div className="min-h-0 flex-1 mt-4 mb-11 overflow-y-auto overflow-x-hidden pr-2 custom-scrollbar">
                 <AnimatePresence mode="wait">
                     {fact && startAnimation && (
                         <motion.h2
                             key={currentIndex}
-                            className="relative text-xl sm:text-xl md:text-2xl break-keep text-pretty"
+                            className="relative text-[clamp(18px,7.5cqw,26px)] leading-[1.55] tracking-tight break-keep text-pretty"
                             initial="hidden"
                             animate="visible"
                             exit="exit"
@@ -94,7 +95,7 @@ export default function Facts({ startAnimation = true }: { startAnimation?: bool
                                 hidden: { opacity: 0 },
                                 visible: {
                                     opacity: 1,
-                                    transition: { staggerChildren: 0.015 }
+                                    transition: { staggerChildren: reduce ? 0 : 0.015 }
                                 },
                                 exit: {
                                     opacity: 0,
@@ -110,8 +111,8 @@ export default function Facts({ startAnimation = true }: { startAnimation?: bool
                                         hidden: { opacity: 0, fontWeight: 100 },
                                         visible: {
                                             opacity: 1,
-                                            fontWeight: isBold ? [100, 900, 800] : [100, 900, 300],
-                                            transition: { duration: 0.8, ease: "easeInOut" }
+                                            fontWeight: reduce ? (isBold ? 800 : 400) : isBold ? [100, 900, 800] : [100, 900, 400],
+                                            transition: { duration: reduce ? 0 : 0.8, ease: "easeInOut" }
                                         },
                                         exit: { opacity: 0, transition: { duration: 0.1 } }
                                     }}
@@ -125,7 +126,7 @@ export default function Facts({ startAnimation = true }: { startAnimation?: bool
             </div>
 
             <div className="absolute bottom-0 right-0">
-                <button className="bg-black/15 dark:bg-black/50 flex items-center justify-center rounded-full p-2 hover:bg-black/30 dark:hover:bg-black/30 transition-colors"
+                <button className="widget-icon-button" aria-label="다른 TMI 보기"
                     onClick={handleReloadFact}>
                     <IonIcon name="refresh-outline" className="text-[var(--foreground)] text-xl" />
                 </button>

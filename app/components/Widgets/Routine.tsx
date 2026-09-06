@@ -1,135 +1,38 @@
 "use client";
-import IonIcon from '@reacticons/ionicons';
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
+const periods = [
+    { key: "morning", label: "아침", icon: "☀", color: "#e6a855", pattern: /🌞 Morning.*?(\d+\.?\d*)%/ },
+    { key: "daytime", label: "오후", icon: "◒", color: "#83aebd", pattern: /🌆 Daytime.*?(\d+\.?\d*)%/ },
+    { key: "evening", label: "저녁", icon: "◐", color: "#a594c7", pattern: /🌃 Evening.*?(\d+\.?\d*)%/ },
+    { key: "night", label: "밤·새벽", icon: "☾", color: "#7e85b9", pattern: /🌙 Night.*?(\d+\.?\d*)%/ },
+];
 export default function Routine() {
-    const [commitStats, setCommitStats] = useState({
-        morning: 0,
-        daytime: 0,
-        evening: 0,
-        night: 0
-    });
-    const [max, setMax] = useState(null);
-    const [maxEng, setMaxEng] = useState(null);
-
+    const [values, setValues] = useState<number[] | null>(null);
+    const [error, setError] = useState(false);
+    const reduce = useReducedMotion();
     useEffect(() => {
-        fetchCommitData();
+        const controller = new AbortController();
+        fetch("/api/github/routine", { signal: controller.signal }).then(response => {
+            if (!response.ok) throw new Error("Routine unavailable");
+            return response.text();
+        }).then(text => {
+            const matches = periods.map(period => text.match(period.pattern));
+            if (matches.some(match => !match)) throw new Error("Missing routine data");
+            setValues(matches.map(match => Number(match![1])));
+        }).catch(() => { if (!controller.signal.aborted) setError(true); });
+        return () => controller.abort();
     }, []);
-
-    const fetchCommitData = async () => {
-        try {
-            const response = await fetch('/api/github/routine');
-            const data = await response.text();
-            const { morning, daytime, evening, night } = parseCommitTimes(data);
-
-            setCommitStats({ morning, daytime, evening, night });
-            const max = Math.max(morning, daytime, evening, night);
-            setMaxEng(max === morning ? 'morning' : max === daytime ? 'daytime' : max === evening ? 'evening' : 'night');
-            setMax(max === morning ? '아침' : max === daytime ? '오후' : max === evening ? '저녁' : '밤과 새벽');
-
-
-        } catch (error) {
-            console.error('Error fetching commit data:', error);
-            setCommitStats({ morning: 0, daytime: 0, evening: 0, night: 0 });
-        }
-    };
-
-    interface CommitTimes {
-        morning: number;
-        daytime: number;
-        evening: number;
-        night: number;
-    }
-
-
-    function parseCommitTimes(text): CommitTimes {
-        const patterns = {
-            morning: /🌞 Morning.*?(\d+\.?\d*)%/,
-            daytime: /🌆 Daytime.*?(\d+\.?\d*)%/,
-            evening: /🌃 Evening.*?(\d+\.?\d*)%/,
-            night: /🌙 Night.*?(\d+\.?\d*)%/
-        };
-
-        const result: CommitTimes = {
-            morning: 0,
-            daytime: 0,
-            evening: 0,
-            night: 0
-        };
-
-        for (const [timeOfDay, pattern] of Object.entries(patterns)) {
-            const match = text.match(pattern);
-            if (match) {
-                result[timeOfDay] = parseFloat(match[1]);
-            } else {
-                result[timeOfDay] = 0;
-            }
-        }
-
-        return result;
-    }
-
-    const timeIcons = {
-        morning: "sunny",
-        daytime: "partly-sunny",
-        evening: "cloudy-night",
-        night: "moon"
-    };
-
-    const timeColors = {
-        morning: "#FFB347",
-        daytime: "#87CEEB",
-        evening: "#9370DB",
-        night: "#483D8B"
-    };
-
-    const timeTitles = {
-        morning: "아침",
-        daytime: "오후",
-        evening: "저녁",
-        night: "밤과 새벽"
-    };
-
+    const max = values ? Math.max(...values) : 0;
+    const favorite = values && max > 0 ? periods[values.indexOf(max)].label : null;
     return (
-        <div className="relative w-full h-full flex flex-col bg-opacity-80 rounded-3xl backdrop-blur-lg">
-            <h2 className="relative text-xl font-black text-gray-500 break-keep text-pretty mb-4">
-                주로 <span className='text-[var(--foreground)]'>{max}</span>에 코딩.
-            </h2>
-
-            <div className="grid grid-cols-2 gap-3 grow overflow-hidden">
-                {Object.entries(commitStats).map(([time, value]) => (
-                    <motion.div
-                        key={time}
-                        className="relative rounded-xl p-3 cursor-pointer overflow-hidden h-full flex flex-col"
-                        style={{
-                            background: 'var(--background, #f3f4f6)',
-                            transition: 'box-shadow 0.3s ease'
-                        }}
-                    >
-                        <AnimatePresence>
-                            {(
-                                <motion.div
-                                    className="absolute top-0 left-0 w-full h-full flex items-center justify-center rounded-xl"
-                                    style={{
-                                        backgroundColor: maxEng === time ? `${timeColors[time]}ee` : 'var(--background)',
-                                        color: maxEng === time ? `#fff` : 'inherit'
-                                    }}
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 0.9 }}
-                                    exit={{ opacity: 0 }}
-                                >
-                                    <div className="text-center">
-                                        <IonIcon name={timeIcons[time]} className="w-8 h-8" />
-                                        <div className="text-lg font-bold">{value}%</div>
-                                        <div className="text-xs opacity-90">{timeTitles[time]} </div>
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
-                    </motion.div>
-                ))}
+        <div className="flex h-full flex-col">
+            <h3 className="widget-heading">{favorite ? <>주로 {favorite}에<br />코딩하는 편.</> : <>나의 코딩<br />루틴.</>}</h3>
+            <div className="my-4 flex min-h-0 flex-1 items-end gap-3">
+                {periods.map((period, i) => <div key={period.key} className="flex h-full min-w-0 flex-1 flex-col items-center gap-1.5"><span className="text-lg" style={{ color: period.color }} aria-hidden="true">{period.icon}</span><div className="flex w-full min-h-0 flex-1 items-end overflow-hidden rounded-lg bg-[var(--widget-control)]"><motion.div className="w-full rounded-lg" initial={reduce ? false : { height: 0 }} animate={{ height: values ? `${values[i]}%` : 0 }} transition={{ type: "spring", stiffness: 100, damping: 20, delay: reduce ? 0 : i * .08 }} style={{ background: period.color, minHeight: values ? 3 : 0 }} /></div><span className="text-xs font-semibold tabular-nums">{values ? `${values[i]}%` : "—"}</span><span className="widget-muted text-[10px]">{period.label}</span></div>)}
             </div>
+            <p className="widget-muted text-[10px]" role="status">{error ? "활동 정보를 불러오지 못했어요" : !values ? "활동 정보 불러오는 중…" : "GitHub 커밋 시간대 기준"}</p>
         </div>
     );
 }

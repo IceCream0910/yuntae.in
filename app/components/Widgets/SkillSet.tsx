@@ -27,7 +27,7 @@ const SkillSet = () => {
     return (
         <div className="relative w-full h-full flex flex-col overflow-hidden">
             <div className="flex-shrink-0 mb-3.5 relative z-10">
-                <h3 className="text-lg font-bold tracking-tight">Skills</h3>
+                <div className="flex items-center justify-between"><h3 className="widget-heading">Skills</h3></div>
             </div>
 
             <div className="relative flex-1 overflow-hidden flex flex-col">
@@ -42,11 +42,11 @@ const SkillSet = () => {
                         <div
                             key={category.title}
                             className={`flex flex-col ${index !== skillCategories.length - 1
-                                ? "border-b border-gray-100/70 dark:border-zinc-800/40 pb-3.5"
+                                ? "pb-3.5 mb-3.5"
                                 : "pb-4"
                                 }`}
                         >
-                            <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 tracking-wider mb-2 uppercase">
+                            <span className="widget-eyebrow mb-2">
                                 {category.title}
                             </span>
                             <div className="flex flex-wrap gap-1.5">
@@ -57,8 +57,8 @@ const SkillSet = () => {
                                             key={skill.name}
                                             className={`group inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-medium cursor-default
                                                 ${isFeatured
-                                                    ? "bg-blue-100/30 dark:bg-blue-400/10 border border-blue-400/70 dark:border-blue-400/50 shadow-sm"
-                                                    : "bg-gray-200/50 dark:bg-zinc-900 border text-gray-700 dark:text-gray-400 border-transparent"
+                                                    ? "bg-[var(--widget-control)] border border-[var(--widget-line)] shadow-sm transition-transform hover:-translate-y-0.5"
+                                                    : "bg-[var(--widget-control)] border border-transparent widget-muted transition-transform hover:-translate-y-0.5"
                                                 }`}
                                         >
                                             <StackIcon name={skill.iconName} className="w-3.5 h-3.5 mr-1.5 flex-shrink-0" />

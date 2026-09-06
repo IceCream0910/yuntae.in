@@ -1,4 +1,5 @@
 import "./globals.css";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 export const metadata = {
   title: "Yun Taein | 윤태인",
@@ -7,8 +8,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="ko">
+    <html lang="ko" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: `(function(){var p='system';try{var s=localStorage.getItem('yuntae-theme');if(s==='light'||s==='dark')p=s;}catch(e){}var d=document.documentElement;d.dataset.themePreference=p;d.dataset.theme=p==='system'?(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):p;})();` }} />
         <meta property="og:type" content="website" data-next-head="" />
         <meta property="og:site_name" content="Yun Taein | 윤태인" data-next-head="" />
         <meta property="twitter:domain" content="https://yuntae.in" data-next-head="" />
@@ -30,7 +32,7 @@ export default function RootLayout({ children }) {
       <body
         className={`antialiased`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

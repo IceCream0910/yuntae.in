@@ -1,223 +1,46 @@
 "use client";
-import { useState, useEffect } from 'react';
-import IonIcon from '@reacticons/ionicons';
-import CountUp from '../CountUp';
-import { motion, Variants } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 
 export default function Navy() {
-    const [progress, setProgress] = useState(0);
-    const [daysLeft, setDaysLeft] = useState(0);
-    const [daysServed, setDaysServed] = useState(0);
-    const [totalDays, setTotalDays] = useState(0);
-
-    const enlistmentDate = new Date('2025-04-21');
-    const dischargeDate = new Date('2026-12-20');
-
+    const [progress, setProgress] = useState<{ percent: number; left: number; served: number } | null>(null);
+    const reduce = useReducedMotion();
     useEffect(() => {
-        const calculateProgress = () => {
-            const now = new Date();
-            const totalServiceTime = dischargeDate.getTime() - enlistmentDate.getTime();
-            setTotalDays(Math.ceil(totalServiceTime / (1000 * 60 * 60 * 24)));
-
-            if (now < enlistmentDate) {
-                setProgress(0);
-                setDaysLeft(Math.ceil((dischargeDate.getTime() - enlistmentDate.getTime()) / (1000 * 60 * 60 * 24)));
-                setDaysServed(0);
-                return;
-            }
-
-            if (now > dischargeDate) {
-                setProgress(100);
-                setDaysLeft(0);
-                setDaysServed(Math.ceil((dischargeDate.getTime() - enlistmentDate.getTime()) / (1000 * 60 * 60 * 24)));
-                return;
-            }
-
-            const timeServed = now.getTime() - enlistmentDate.getTime();
-            const progressPercentage = (timeServed / totalServiceTime) * 100;
-
-            setProgress(Math.round(progressPercentage * 100) / 100);
-            setDaysServed(Math.ceil(timeServed / (1000 * 60 * 60 * 24)));
-            setDaysLeft(Math.ceil((dischargeDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+        const update = () => {
+            const start = new Date("2025-04-21T00:00:00+09:00").getTime();
+            const end = new Date("2026-12-18T00:00:00+09:00").getTime();
+            const now = Date.now();
+            const elapsed = Math.max(0, Math.min(now - start, end - start));
+            setProgress({ percent: elapsed / (end - start) * 100, left: Math.max(0, Math.ceil((end - now) / 86400000)), served: Math.floor(elapsed / 86400000) });
         };
-
-        calculateProgress();
+        update();
+        const timer = setInterval(update, 60000);
+        return () => clearInterval(timer);
     }, []);
-
-    const waveVariants: Variants = {
-        animate: {
-            x: [0, -100],
-            transition: {
-                x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: 5,
-                    ease: "linear",
-                }
-            }
-        }
-    };
-
-    const waveVariants2: Variants = {
-        animate: {
-            x: [0, -100],
-            transition: {
-                x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: 7,
-                    ease: "linear",
-                }
-            }
-        }
-    };
-
-    const topWaveVariants: Variants = {
-        animate: {
-            x: [-100, -50],
-            y: [-4, 4, -4],
-            transition: {
-                x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: 4,
-                    ease: "linear",
-                }
-            }
-        }
-    };
-
-    const boatVariants: Variants = {
-        animate: {
-            y: [0, -4, 0],
-            rotate: [0, 1, 0, -1, 0],
-            transition: {
-                y: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 2,
-                    ease: "easeInOut",
-                },
-                rotate: {
-                    repeat: Infinity,
-                    repeatType: "reverse",
-                    duration: 3,
-                    ease: "easeInOut",
-                }
-            }
-        }
-    };
-
-
-    // Seagull animation variants
-    const seagullVariants: Variants = {
-        animate: {
-            x: [-20, 100],
-            transition: {
-                x: {
-                    repeat: Infinity,
-                    duration: 8,
-                    ease: "linear",
-                }
-            }
-        }
-    };
-
     return (
-        <div className="relative w-full h-full">
-            <h2 className="relative text-2xl font-black text-gray-500 break-keep text-pretty">
-                대한민국 <span className="text-[var(--foreground)]">해군</span>에<br /><span className="text-[var(--foreground)]">복무 {daysServed == 0 ? "예정" : "중"}</span>이에요 <span className='emoji'>🪖</span>
-            </h2>
-            <div className="relative h-full">
-                <div className="absolute top-[50%] left-0 w-full h-0 z-10"></div>
-
-                <div className="absolute top-[50%] -left-6 w-full h-[50%] bg-blue-500" style={{ width: 'calc(100% + 12rem)' }}>
-                    <motion.div
-                        className="absolute -top-1 w-full"
-                        variants={topWaveVariants}
-                        animate="animate"
-                    >
-                        <svg width="200%" height="8" viewBox="0 0 200 8" preserveAspectRatio="none">
-                            <path
-                                d="M0,0 C30,4 70,1 100,3 C130,5 170,2 200,4 L200,8 L0,8 Z"
-                                fill="rgba(59, 130, 246, 0.7)"
-                            />
-                        </svg>
-                    </motion.div>
-
-                    <motion.div
-                        className="absolute top-0 w-full"
-                        variants={waveVariants}
-                        animate="animate"
-                    >
-                        <svg width="200%" height="16" viewBox="0 0 200 20" preserveAspectRatio="none">
-                            <path
-                                d="M0,20 C20,10 40,30 60,20 C80,10 100,30 120,20 C140,10 160,30 180,20 C200,10 220,30 240,20 L240,50 L0,50 Z"
-                                fill="rgba(255,255,255,0.3)"
-                            />
-                        </svg>
-                    </motion.div>
-
-                    <motion.div
-                        className="absolute -top-2 w-full"
-                        variants={waveVariants2}
-                        animate="animate"
-                    >
-                        <svg width="200%" height="16" viewBox="0 0 200 20" preserveAspectRatio="none">
-                            <path
-                                d="M0,20 C30,15 70,25 100,15 C130,5 170,15 200,10 C230,15 270,25 300,15 L300,50 L0,50 Z"
-                                fill="rgba(255,255,255,0.2)"
-                            />
-                        </svg>
-                    </motion.div>
+        <div className="relative flex h-full flex-col">
+            <div className="flex items-center justify-between">
+                <div>
+                    <h3 className="widget-heading">대한민국 해군 <span className="emoji">⚓</span> 에<br />복무 중이에요.</h3>
                 </div>
-
-                <motion.div
-                    className="absolute top-[calc(50%-18px)]"
-                    style={{
-                        left: `${progress - 10}%`,
-                    }}
-                    variants={boatVariants}
-                    animate="animate"
-                >
-                    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2,28 L10,32 L38,32 L46,28 L2,28 Z" fill="#555555" />
-                        <path d="M10,32 L10,24 L38,24 L38,32" fill="#666666" stroke="#444444" strokeWidth="0.5" />
-
-                        <rect x="18" y="14" width="12" height="10" fill="#666666" />
-                        <rect x="20" y="6" width="8" height="8" fill="#666666" />
-                        <rect x="16" y="18" width="16" height="6" fill="#777777" />
-
-                        <rect x="6" y="26" width="8" height="2" fill="#444444" />
-                        <rect x="34" y="26" width="8" height="2" fill="#444444" />
-
-                        <circle cx="14" cy="22" r="2" fill="#555555" />
-                        <circle cx="34" cy="22" r="2" fill="#555555" />
-                        <rect x="13" y="20" width="2" height="3" fill="#444444" />
-                        <rect x="33" y="20" width="2" height="3" fill="#444444" />
-
-                        <path d="M24,2 L24,6" stroke="#888888" strokeWidth="1" />
-                        <circle cx="24" cy="2" r="1.5" fill="#888888" />
-                        <path d="M21,8 L21,12" stroke="#888888" strokeWidth="0.5" />
-                        <path d="M27,8 L27,12" stroke="#888888" strokeWidth="0.5" />
-
-                        <rect x="15" y="16" width="4" height="1.5" fill="#444444" />
-                        <rect x="29" y="16" width="4" height="1.5" fill="#444444" />
-                        <rect x="22" y="12" width="4" height="2" fill="#888888" />
-                    </svg>
-                </motion.div>
-
             </div>
-
-            <h1 className="absolute bottom-0 text-2xl font-bold text-white text-right w-full z-50">
-                <CountUp
-                    from={0}
-                    to={progress}
-                    separator=","
-                    direction="down"
-                    duration={0.5}
-                    className="count-up-text" onStart={undefined} onEnd={undefined} />%
-            </h1>
+            <div className="relative z-10 min-h-0 flex-1">
+                <div className="absolute -bottom-2.5" style={{ left: `${progress?.percent ?? 0}%`, transform: `translateX(-${progress?.percent ?? 0}%)` }}>
+                    <motion.svg aria-hidden="true" className="h-9 w-16" viewBox="0 0 112 64" animate={reduce ? undefined : { y: [0, -3, 0], rotate: [-2, 2, -2] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}>
+                        <path d="M5 44h77l25-5-12 18H17Z" fill="#657d8e" />
+                        <path d="M27 44V31h12V20h20l9 24Z" fill="#a7bac6" />
+                        <path d="M44 26h13" stroke="#38556b" strokeWidth="4" />
+                        <path d="M49 20V7m-8 5h18" stroke="#c4d1d9" strokeWidth="3" />
+                        <path d="M73 35h9l7 9H69Z" fill="#a7bac6" />
+                        <path d="m80 36 16-5" stroke="#c4d1d9" strokeWidth="4" strokeLinecap="round" />
+                    </motion.svg>
+                </div>
+            </div>
+            <div className="relative z-0 -mx-6 -mb-6 overflow-hidden bg-[#286cb0] px-6 pb-6 pt-5 text-white">
+                <motion.svg aria-hidden="true" className="absolute -top-1 left-0 h-3 w-[200%]" viewBox="0 0 400 12" preserveAspectRatio="none" animate={reduce ? undefined : { x: [0, "-50%"] }} transition={{ duration: 8, repeat: Infinity, ease: "linear" }}><path d="M0 4 Q50 12 100 4 T200 4 T300 4 T400 4 V0 H0Z" fill="var(--secondary)" /></motion.svg>
+                <div className="flex items-end justify-between"><div><p className="text-[10px] text-blue-100">복무 진행률</p><p className="widget-number mt-1 text-4xl font-semibold">{progress ? progress.percent.toFixed(1) : "—"}<span className="ml-1 text-lg">%</span></p></div><div className="text-right"><p className="text-xl font-semibold">{progress ? (progress.left === 0 ? "완료" : `D−${progress.left}`) : "—"}</p><p className="mt-1 text-[10px] text-blue-100">2026.12.20 전역</p></div></div>
+                <div className="mt-3 h-1 overflow-hidden rounded-full bg-white/20"><motion.div className="h-full rounded-full bg-blue-100" initial={reduce ? false : { width: 0 }} animate={{ width: `${progress?.percent ?? 0}%` }} transition={{ duration: reduce ? 0 : 1 }} /></div>
+            </div>
         </div>
     );
 }

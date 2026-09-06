@@ -36,6 +36,8 @@ export async function GET(req, { params }) {
 
     try {
         const response_token = await fetch(process.env.MUSICKIT_TOKEN_URL);
+
+        console.log(response_token)
         const token_data = await response_token.json();
         const token = token_data.token_string;
 

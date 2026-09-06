@@ -1,127 +1,51 @@
 "use client";
-import { useState, useEffect } from 'react';
-import IonIcon from '@reacticons/ionicons';
+import { useEffect, useState } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
+type Contribution = { date: string; count: number; level: number };
+const colors = ["#ffffff12", "#506d42", "#77994a", "#a6cc68", "#d6f5a0"];
 export default function Github() {
-    const [contributions, setContributions] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const [hoveredDay, setHoveredDay] = useState(null);
-
+    const [days, setDays] = useState<Contribution[] | null>(null);
+    const [error, setError] = useState(false);
+    const [active, setActive] = useState<Contribution | null>(null);
+    const reduce = useReducedMotion();
     useEffect(() => {
-        const fetchContributions = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch('https://github-contributions-api.jogruber.de/v4/icecream0910');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data = await response.json();
-                setContributions(data.contributions);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchContributions();
+        const controller = new AbortController();
+        fetch("https://github-contributions-api.jogruber.de/v4/icecream0910", { signal: controller.signal }).then(response => {
+            if (!response.ok) throw new Error("GitHub unavailable");
+            return response.json();
+        }).then(data => {
+            const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Seoul" });
+            setDays(data.contributions.filter((day: Contribution) => day.date <= today).sort((a: Contribution, b: Contribution) => a.date.localeCompare(b.date)).slice(-35));
+        }).catch(() => { if (!controller.signal.aborted) setError(true); });
+        return () => controller.abort();
     }, []);
-
-    const levelToColor = (level) => {
-        const colors = [
-            'bg-gray-300 dark:bg-gray-700', // Level 0
-            'bg-green-400 dark:bg-green-700', // Level 1
-            'bg-green-600 dark:bg-green-600', // Level 2
-            'bg-green-800 dark:bg-green-500', // Level 3
-            'bg-green-900 dark:bg-green-300'  // Level 4
-        ];
-        return colors[level] || colors[0];
-    };
-
-    const formatNumber = (num) => {
-        return new Intl.NumberFormat('en-US').format(num);
-    };
-
-    const today = new Date();
-    const pastThreshold = new Date();
-    pastThreshold.setDate(today.getDate() - 36);
-    const recentContributions = contributions
-        .filter(contrib => {
-            const contribDate = new Date(contrib.date);
-            return contribDate >= pastThreshold && contribDate <= today;
-        })
-        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-    const totalRecent = recentContributions.reduce((sum, contrib) => sum + contrib.count, 0);
-
-    const renderContributionDots = () => {
-        return (
-            <div className="flex flex-wrap gap-1">
-                {recentContributions.map((contrib, index) => (
-                    <div
-                        key={index}
-                        className={`w-4 h-4 rounded-full transition-all duration-300 ${levelToColor(contrib.level)} ${hoveredDay === index ? 'scale-125' : ''}`}
-                        onMouseEnter={() => setHoveredDay(index)}
-                        onMouseLeave={() => setHoveredDay(null)}
-                    >
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
+    const total = days?.reduce((sum, day) => sum + day.count, 0);
     return (
-        <div className="relative w-full h-full overflow-hidden transition-all duration-300">
-            <div className="w-full flex items-center mb-2">
+        <div className="flex h-full flex-col">
+            <div className="flex items-start justify-between">
                 <div>
-                    <h3 className="text-gray-900 dark:text-gray-100 font-bold text-lg">GitHub Stats</h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">@icecraem0910</p>
-                </div>
+                    <h3 className="widget-heading">Github에 한 달 간<br />{total === undefined ? "—" : total.toLocaleString("en-US")}개의 commit</h3><p className="widget-muted mt-1 text-[11px]">@icecream0910</p>
 
-                <button className="absolute right-0 bg-black/15 dark:bg-black/50 flex items-center justify-center rounded-full p-2 hover:bg-black/30 dark:hover:bg-black/30"
-                    onClick={() => window.open("https://github.com/icecream0910", '_blank')}>
-                    <IonIcon name="add" className="text-[var(--foreground)] text-xl" />
-                </button>
+                </div>
+                <a className="widget-icon-button" href="https://github.com/icecream0910" target="_blank" rel="noreferrer" aria-label="GitHub 프로필 열기">↗</a>
             </div>
-
-            <div className="absolute bottom-0">
-                <h2 className="text-3xl font-black text-gray-800 dark:text-gray-200 mb-4">
-                    <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
-                        최근 36일 동안<br />
-                    </span>
-                    {formatNumber(totalRecent)}
-                    <span className="ml-1 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        개의 commits
-                    </span>
-                </h2>
-
-                {renderContributionDots()}
+            <div className="my-auto py-3">
             </div>
-
-            {loading && (
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="animate-spin h-8 w-8 border-4 border-green-500 rounded-full border-t-transparent"></div>
+            <div className="relative" onMouseLeave={() => setActive(null)}>
+                <AnimatePresence>
+                    {active && <motion.div key={active.date} initial={{ opacity: 0, y: 3 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="pointer-events-none absolute bottom-full right-0 z-10 mb-2 rounded-lg bg-[#ecf5df] px-2 py-1 text-[10px] text-[#192c23]" role="status">{active.date} · {active.count} contributions</motion.div>}
+                </AnimatePresence>
+                <div className="grid grid-cols-7 gap-1.5">
+                    {(days ?? Array.from({ length: 35 }, (_, i) => ({ date: String(i), count: 0, level: 0 }))).map((day, index) => (
+                        <motion.button key={day.date} disabled={!days} aria-label={`${day.date}: ${day.count} contributions`} onMouseEnter={() => setActive(day)} onFocus={() => setActive(day)} onBlur={() => setActive(null)} onClick={() => setActive(day)} className="h-[clamp(12px,5cqw,20px)] rounded-[4px]" style={{ background: colors[day.level] ?? colors[0] }} initial={reduce ? false : { opacity: 0, scale: .6 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: reduce ? 0 : index * .012 }} whileHover={reduce ? undefined : { scale: 1.12, transition: { delay: 0 } }} />
+                    ))}
                 </div>
-            )}
-
-            {error && (
-                <div className="mt-4 p-2 bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-100 rounded">
-                    Error: {error}
-                </div>
-            )}
-
-            <style jsx>{`
-                @keyframes pulse-slow {
-                    0%, 100% {
-                        opacity: 1;
-                    }
-                    50% {
-                        opacity: 0.8;
-                    }
-                }
-                .animate-pulse-slow {
-                    animation: pulse-slow 3s infinite;
-                }
-            `}</style>
+            </div>
+            <div className="widget-muted mt-3 flex items-center justify-between text-[10px]">
+                <span role="status">{error ? "사용량을 불러오지 못했어요" : !days ? "불러오는 중…" : ""}</span>
+                <span className="flex items-center gap-1" aria-hidden="true">Less {colors.map(color => <i key={color} className="h-1.5 w-1.5 rounded-sm" style={{ background: color }} />)} More</span>
+            </div>
         </div>
     );
 }
