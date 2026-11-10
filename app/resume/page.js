@@ -7,6 +7,7 @@ import styles from "./resume.module.css";
 import ResumeSkills from "./ResumeSkills";
 import ResumeSidebar from "./ResumeSidebar";
 import ResumeProjectStory from "./ResumeProjectStory";
+import ThemePicker from "../components/ThemePicker";
 
 export const metadata = {
   title: "Resume | 윤태인",
@@ -21,7 +22,7 @@ const sections = [
   ["certifications", "Certificates"],
 ];
 
-const selectedProjects = projectData.filter((project) => project.pin);
+const selectedProjects = projectData.filter((project) => project.showOnResume);
 
 function getInfo(project, name) {
   return project.info?.find((item) => item.name === name)?.value;
@@ -52,9 +53,10 @@ export default function ResumePage() {
 
       <main id="resume-content" className={styles.content}>
         <header id="top" className={styles.hero}>
-          <h1>
-            Yun Taein.
-          </h1>
+          <div className={styles.mobileThemePicker}>
+            <ThemePicker />
+          </div>
+          <h1>Yun Taein.</h1>
           <p className="mt-8 text-xl font-bold leading-relaxed ">
             A Software Engineer crafting people-oriented services<br />to solve everyday inconveniences.
           </p>
@@ -111,7 +113,7 @@ export default function ResumePage() {
                 <article key={project.title} className={styles.project}>
                   <div className={styles.projectMeta}>
                     <time>{period}</time>
-                    <span>{Array.isArray(project.category) ? project.category.join(" · ") : project.category}</span>
+                    <span>{project.categories.join(" · ")}</span>
                   </div>
                   <div className={styles.projectBody}>
                     <div className={styles.projectTitle}>

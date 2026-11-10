@@ -1,10 +1,11 @@
 "use client";
 
-import projectData from "./data";
+import type { ProjectData } from "./data";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import IonIcon from "@reacticons/ionicons";
 import LazyImage from "../components/LazyImage";
+import ProjectScreenshots from "./ProjectScreenshots";
 
 function getPlaceholderUrl(src?: string) {
     if (!src) return undefined;
@@ -27,16 +28,15 @@ function getPlaceholderUrl(src?: string) {
     return undefined;
 }
 
-export default function Project({ title, icon, summary, directLink, ...props }) {
-    const data = projectData.find((project) => project.title === decodeURIComponent(title));
+export default function Project({ project, showFeatured }: { project: ProjectData; showFeatured?: boolean }) {
+    const { title, summary, categories, icon, directLink, thumbnail, links, info, screenshots, blogPostUrl } = project;
     const [isSelected, setIsSelected] = useState(false);
     const [isReady, setIsReady] = useState(false);
     const [iframeHeight, setIframeHeight] = useState("620px");
     const [isModalExpanded, setIsModalExpanded] = useState(false);
     const [isIframeLoaded, setIsIframeLoaded] = useState(false);
-    const screenshotsRef = useRef<HTMLDivElement>(null);
     const shouldReduceMotion = useReducedMotion();
-    const placeholderSrc = getPlaceholderUrl(props.thumbnail);
+    const placeholderSrc = getPlaceholderUrl(thumbnail);
 
     useEffect(() => {
         setIsReady(true);
@@ -87,28 +87,7 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
         return () => window.clearTimeout(fallbackTimer);
     }, [isSelected, isModalExpanded, shouldReduceMotion]);
 
-    if (!data || !isReady) return null;
-
-    const categories = (Array.isArray(data.category) ? data.category : [data.category]).filter(Boolean);
-    const scrollScreenshots = (direction: "left" | "right") => {
-        const container = screenshotsRef.current;
-        if (!container) return;
-
-        const start = container.scrollLeft;
-        const distance = (direction === "left" ? -1 : 1) * container.clientWidth * 0.78;
-        const target = Math.max(0, Math.min(start + distance, container.scrollWidth - container.clientWidth));
-        const duration = shouldReduceMotion ? 0 : 520;
-        const startedAt = performance.now();
-
-        const animateScroll = (now: number) => {
-            const progress = duration === 0 ? 1 : Math.min((now - startedAt) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 4);
-            container.scrollLeft = start + (target - start) * eased;
-            if (progress < 1) requestAnimationFrame(animateScroll);
-        };
-
-        requestAnimationFrame(animateScroll);
-    };
+    if (!isReady) return null;
 
     return (
         <>
@@ -122,15 +101,23 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                 transition={{ duration: 0.25 }}
                 layout
             >
-                {props.thumbnail && (
-                    <LazyImage
-                        layoutId={`thumbnail-${title}`}
-                        src={props.thumbnail}
-                        placeholderSrc={placeholderSrc}
-                        alt={`${title} 프로젝트 미리보기`}
-                        className="rounded-2xl"
-                        aspectRatio="16/10"
-                    />
+                {thumbnail && (
+                    <div className="relative">
+                        <LazyImage
+                            layoutId={`thumbnail-${title}`}
+                            src={thumbnail}
+                            placeholderSrc={placeholderSrc}
+                            alt={`${title} 프로젝트 미리보기`}
+                            className="rounded-2xl"
+                            aspectRatio="16/10"
+                        />
+                        {showFeatured && (
+                            <span className="pointer-events-none absolute right-2.5 top-2.5 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-amber-100 text-sm text-amber-900 shadow-sm dark:bg-amber-950 dark:text-amber-200">
+                                <IonIcon name="star" aria-hidden="true" />
+                                <span className="sr-only">Featured</span>
+                            </span>
+                        )}
+                    </div>
                 )}
                 <div className="px-3 py-4">
                     <motion.h2 layoutId={`title-${title}`} className="text-lg font-bold m-0 flex items-center gap-1.5">
@@ -184,9 +171,9 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                                             </div>
                                             <motion.h1 id={`project-title-${title}`} layoutId={`title-${title}`} className="text-3xl font-black tracking-tight md:text-4xl">{title}</motion.h1>
                                             <motion.p layoutId={`summary-${title}`} className="mt-2 max-w-2xl text-base leading-relaxed opacity-60 md:text-lg">{summary}</motion.p>
-                                            {props.links?.length > 0 && (
+                                            {links?.length > 0 && (
                                                 <div className="mt-3 flex flex-wrap gap-2">
-                                                    {props.links.map((link, index) => (
+                                                    {links.map((link, index) => (
                                                         <a key={index} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-full bg-gray-200 dark:bg-gray-800 text-[var(--foreground)] px-4 py-2 text-sm font-bold transition">
                                                             {link.name}<IonIcon name="arrow-up-outline" className="rotate-45" />
                                                         </a>
@@ -196,39 +183,29 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                                         </div>
                                     </div>
 
-                                    {data.info?.length > 0 && (
+                                    {info?.length > 0 && (
                                         <div className="mt-8 flex flex-wrap justify-center overflow-hidden rounded-2xl border border-black/[0.07] bg-[var(--secondary)] dark:border-white/10">
-                                            {data.info.map((info, index) => (
+                                            {info.map((item, index) => (
                                                 <div
                                                     key={index}
                                                     className="w-1/2 border-black/[0.07] p-4 text-center dark:border-white/10 md:p-5 sm:w-[var(--info-width)] [&:not(:last-child)]:border-r"
-                                                    style={{ "--info-width": `${100 / Math.min(data.info.length, 4)}%` } as React.CSSProperties}
+                                                    style={{ "--info-width": `${100 / Math.min(info.length, 4)}%` } as React.CSSProperties}
                                                 >
-                                                    <span className="block text-xs font-medium opacity-45">{info.name}</span>
-                                                    <strong className="mt-1 block text-sm md:text-base">{info.value}</strong>
+                                                    <span className="block text-xs font-medium opacity-45">{item.name}</span>
+                                                    <strong className="mt-1 block text-sm md:text-base">{item.value}</strong>
                                                 </div>
                                             ))}
                                         </div>
                                     )}
                                 </section>
 
-                                {data.image?.length > 0 ? (
-                                    <section className="mx-auto mt-10 max-w-4xl">
-                                        <div className="mb-4 flex items-end justify-between">
-                                            <div><span className="text-xs font-bold uppercase tracking-widest opacity-40">Screenshots</span><h2 className="text-xl font-bold">프로젝트 둘러보기</h2></div>
-                                            <div className="hidden gap-2 sm:flex">
-                                                {(["left", "right"] as const).map((direction) => <button key={direction} aria-label={`${direction === "left" ? "이전" : "다음"} 스크린샷`} onClick={() => scrollScreenshots(direction)} className="flex h-9 w-9 items-center justify-center rounded-full bg-[var(--secondary)]"><IonIcon name={direction === "left" ? "chevron-back" : "chevron-forward"} /></button>)}
-                                            </div>
-                                        </div>
-                                        <div ref={screenshotsRef} className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 scrollbar-none md:mx-0 md:px-0">
-                                            {data.image.map((img, index) => <img key={index} src={img} alt={`${title} 스크린샷 ${index + 1}`} loading="lazy" className="h-[280px] w-auto max-w-[85vw] flex-none snap-center rounded-2xl bg-[var(--secondary)] object-contain ring-1 ring-black/[0.06] md:h-[380px]" />)}
-                                        </div>
-                                    </section>
-                                ) : data.thumbnail ? (
-                                    <section className="mx-auto mt-10 max-w-4xl"><LazyImage src={data.thumbnail} placeholderSrc={placeholderSrc} alt={`${title} 프로젝트 화면`} className="rounded-2xl" aspectRatio="16/9" /></section>
+                                {screenshots?.length > 0 ? (
+                                    <ProjectScreenshots title={title} images={screenshots} reducedMotion={shouldReduceMotion} />
+                                ) : thumbnail ? (
+                                    <section className="mx-auto mt-10 max-w-4xl"><LazyImage src={thumbnail} placeholderSrc={placeholderSrc} alt={`${title} 프로젝트 화면`} className="rounded-2xl" aspectRatio="16/9" /></section>
                                 ) : null}
 
-                                {data.blogPostUrl && (
+                                {blogPostUrl && (
                                     <section
                                         className="mx-auto mt-12 max-w-4xl border-t border-black/[0.07] pt-8 dark:border-white/10"
                                         aria-busy={!isIframeLoaded}
@@ -236,21 +213,30 @@ export default function Project({ title, icon, summary, directLink, ...props }) 
                                         <span className="text-xs font-bold uppercase tracking-widest opacity-40">Story</span>
                                         <h2 className="mb-4 text-xl font-bold">프로젝트 상세</h2>
                                         <div className="relative min-h-[620px] overflow-hidden">
-                                            {!isIframeLoaded && (
-                                                <div className="absolute inset-0 z-10 animate-pulse bg-[var(--secondary)] p-6" aria-hidden="true">
-                                                    <div className="h-6 w-2/5 rounded-full bg-black/[0.07] dark:bg-white/10" />
-                                                    <div className="mt-7 space-y-3">
-                                                        <div className="h-3 w-full rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
-                                                        <div className="h-3 w-11/12 rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
-                                                        <div className="h-3 w-4/5 rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
-                                                    </div>
-                                                    <div className="mt-10 aspect-video w-full rounded-xl bg-black/[0.055] dark:bg-white/[0.07]" />
-                                                </div>
-                                            )}
+                                            <AnimatePresence>
+                                                {!isIframeLoaded && (
+                                                    <motion.div
+                                                        className="pointer-events-none absolute inset-0 z-10 bg-[var(--background)] p-6"
+                                                        aria-hidden="true"
+                                                        exit={{ opacity: 0 }}
+                                                        transition={{ duration: shouldReduceMotion ? 0 : 0.3 }}
+                                                    >
+                                                        <div className="motion-safe:animate-pulse">
+                                                            <div className="h-6 w-2/5 rounded-full bg-black/[0.07] dark:bg-white/10" />
+                                                            <div className="mt-7 space-y-3">
+                                                                <div className="h-3 w-full rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
+                                                                <div className="h-3 w-11/12 rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
+                                                                <div className="h-3 w-4/5 rounded-full bg-black/[0.06] dark:bg-white/[0.08]" />
+                                                            </div>
+                                                            <div className="mt-10 aspect-video w-full rounded-xl bg-black/[0.055] dark:bg-white/[0.07]" />
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
                                             {isModalExpanded && (
                                                 <iframe
-                                                    src={data.blogPostUrl}
-                                                    className={`w-full border-0 transition-opacity duration-300 ${isIframeLoaded ? "opacity-100" : "opacity-0"}`}
+                                                    src={blogPostUrl}
+                                                    className={`w-full border-0 motion-safe:transition-opacity motion-safe:duration-300 ${isIframeLoaded ? "opacity-100" : "opacity-0"}`}
                                                     title={`${title} 상세 글`}
                                                     style={{ height: iframeHeight }}
                                                     onLoad={() => setIsIframeLoaded(true)}

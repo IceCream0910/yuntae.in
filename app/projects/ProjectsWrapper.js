@@ -5,22 +5,20 @@ import projectData from "./data";
 import Project from "./Project";
 import IonIcon from '@reacticons/ionicons';
 
+const categories = ['All', ...new Set(projectData.flatMap(project => project.categories))];
+const allProjects = [
+    ...projectData.filter(project => project.featured),
+    ...projectData.filter(project => !project.featured),
+];
+
 export default function ProjectsWrapper() {
     const [selectedCategory, setSelectedCategory] = useState('All');
     const tabsRef = useRef(null);
     const [showLeftScroll, setShowLeftScroll] = useState(false);
     const [showRightScroll, setShowRightScroll] = useState(false);
 
-    const categories = ['All', ...new Set(projectData.flatMap(project =>
-        Array.isArray(project.category) ? project.category : [project.category]
-    ).filter(Boolean))];
-
-    const filteredProjects = projectData.filter(project => {
-        if (selectedCategory === 'All') return true;
-        return Array.isArray(project.category)
-            ? project.category.includes(selectedCategory)
-            : project.category === selectedCategory;
-    });
+    const isAll = selectedCategory === 'All';
+    const visibleProjects = isAll ? allProjects : projectData.filter(project => project.categories.includes(selectedCategory));
 
     const scrollTabs = (direction) => {
         const container = tabsRef.current;
@@ -97,8 +95,8 @@ export default function ProjectsWrapper() {
 
             <div className="grid gap-5 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
                 <AnimatePresence mode="popLayout">
-                    {filteredProjects.map((project) => (
-                        <Project key={project.title} {...project} />
+                    {visibleProjects.map((project) => (
+                        <Project key={project.title} project={project} showFeatured={isAll && project.featured} />
                     ))}
                 </AnimatePresence>
             </div>

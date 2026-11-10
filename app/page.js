@@ -18,7 +18,7 @@ import { motion, MotionConfig } from "framer-motion";
 import "./components/Widgets/widgets.css";
 import Facts from "./components/Widgets/Facts";
 import SocialLinks from "./components/SocialLinks";
-import { ThemeSwitch } from "./components/ThemeProvider";
+import ThemePicker from "./components/ThemePicker";
 
 export default function Home() {
   const [factsCardRevealed, setFactsCardRevealed] = useState(false);
@@ -41,14 +41,16 @@ export default function Home() {
   return (
     <MotionConfig reducedMotion="user">
       <NavBar activeTab={0} />
-      <main className="min-h-screen pt-24 sm:pt-16 px-6 pb-24 relative">
-        <div className="max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto">
-          <div className="mb-3 flex items-start justify-between gap-5">
+      <main className="min-h-screen px-6 pb-24 relative">
+        <div className="relative max-w-2xl lg:max-w-4xl xl:max-w-6xl mx-auto pt-16">
+          <header className="mb-3">
+            <div className="absolute right-0 top-5 md:top-16">
+              <ThemePicker />
+            </div>
             <motion.h1 layoutId="main-title" className="text-3xl font-black opacity-90">
               안녕하세요🖐️<br />저는 윤태인입니다.
             </motion.h1>
-            <div className="absolute right-6 top-5 sm:static"><ThemeSwitch /></div>
-          </div>
+          </header>
 
           <p className="text-lg font-light opacity-60 mb-3">
             사람을 향한 기술과 서비스로 세상의 불편함을 해결하려는 소프트웨어 엔지니어입니다.

@@ -2,6 +2,7 @@
   --resume-muted: color-mix(in srgb, var(--foreground) 48%, transparent);
   --resume-faint: color-mix(in srgb, var(--foreground) 11%, transparent);
   min-height: 100vh;
+  position: relative;
 }
 
 .skipLink {
@@ -113,6 +114,10 @@
   margin-top: 1.75rem;
 }
 
+.mobileThemePicker {
+  display: none;
+}
+
 .content {
   width: min(100% - 18rem, 58rem);
   margin-left: max(18rem, calc((100vw - 76rem) / 2 + 18rem));
@@ -121,13 +126,13 @@
 
 .hero {
   min-height: 20rem;
+  padding-top: 2.25rem;
   scroll-margin-top: 2rem;
 }
 
 .hero h1 {
   display: flex;
   flex-direction: column;
-  margin-top: 2.25rem;
   font-size: clamp(3.6rem, 8vw, 6.7rem);
   font-weight: 850;
   letter-spacing: -0.075em;
@@ -420,6 +425,13 @@
     display: none;
   }
 
+  .mobileThemePicker {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: max(1.5rem, calc((100% - 46rem) / 2 + 1.5rem));
+  }
+
   .content {
     width: min(100%, 46rem);
     margin: 0 auto;
@@ -483,6 +495,7 @@
 @media print {
 
   .sidebar,
+  .mobileThemePicker,
   .mobileLinks,
   .moreLink,
   .skipLink {

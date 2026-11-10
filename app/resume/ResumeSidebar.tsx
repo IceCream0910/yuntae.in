@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ThemePicker from "../components/ThemePicker";
 import styles from "./resume.module.css";
 
 type Section = [string, string];
@@ -43,9 +44,12 @@ export default function ResumeSidebar({ sections }: { sections: Section[] }) {
 
     return (
         <aside className={styles.sidebar}>
-            <a className={styles.identity} href="#top" aria-label="이력서 상단으로">
-                <strong>Yun Taein.</strong>
-            </a>
+            <div className="flex items-center justify-between gap-3">
+                <a className={styles.identity} href="#top" aria-label="이력서 상단으로">
+                    <strong>Yun Taein.</strong>
+                </a>
+                <ThemePicker />
+            </div>
 
             <nav aria-label="이력서 섹션">
                 {sections.map(([id, label], index) => {

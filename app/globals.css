@@ -32,6 +32,34 @@ body {
   background: var(--background);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .theme-picker-popup {
+    --theme-picker-enter-offset: -4px;
+    transform-origin: top right;
+    animation: theme-picker-enter 150ms ease-out;
+  }
+
+  .theme-picker-popup[data-placement="above"] {
+    --theme-picker-enter-offset: 4px;
+    transform-origin: bottom left;
+  }
+
+  ::view-transition-group(root) {
+    animation-duration: 250ms;
+  }
+
+  @supports not selector(::view-transition-group(root)) {
+    body {
+      transition: background-color 250ms ease, color 250ms ease;
+    }
+  }
+}
+
+@keyframes theme-picker-enter {
+  from { opacity: 0; transform: translateY(var(--theme-picker-enter-offset)) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .emoji {
   font-family: Tossface;
 }
