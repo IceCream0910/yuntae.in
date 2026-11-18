@@ -41,8 +41,9 @@ export async function GET(request: NextRequest) {
         upstream = "youtube-search";
         let videoId: string | null = null;
         if (song && song.durationInMillis > 0 && song.durationInMillis <= 720_000) {
-            if (song.isrc) videoId = await searchVideo(song.isrc, song);
+            if (song.isrc) videoId = await searchVideo(song.isrc, song, true);
             videoId ??= await searchVideo(`${song.name} ${song.artistName} auto-generated`, song);
+            videoId ??= await searchVideo(`${song.name} ${song.artistName}`, song);
         }
 
         const data = song && videoId ? {
@@ -59,7 +60,7 @@ export async function GET(request: NextRequest) {
     }
 }
 
-async function searchVideo(query: string, song: Song) {
+async function searchVideo(query: string, song: Song, byIsrc = false) {
     const params = new URLSearchParams({ query });
     const response = await fetch(`https://music.yuntae.in/api/search?${params}`, {
         signal: AbortSignal.timeout(5000),
@@ -75,8 +76,15 @@ async function searchVideo(query: string, song: Song) {
     const artist = normalize(song.artistName);
     const videoTitle = normalize(data.title);
     const channel = normalize(data.channelTitle);
-    if (!title || !artist || !videoTitle.includes(title)
-        || !(channel.includes(artist) || videoTitle.includes(artist))) {
+    const length = data.length?.simpleText;
+    const videoSeconds = typeof length === "string" && /^\d{1,2}:\d{2}$/.test(length)
+        ? length.split(":").reduce((seconds: number, component: string) => seconds * 60 + Number(component), 0)
+        : 0;
+    const durationMatches = videoSeconds > 0 && Math.abs(videoSeconds - song.durationInMillis / 1000) <= 5;
+    const titleMatches = Boolean(title) && videoTitle.includes(title);
+    const artistMatches = Boolean(artist) && (channel.includes(artist) || videoTitle.includes(artist));
+    // An ISRC query plus duration can match the same recording with a localized title.
+    if (!(byIsrc && durationMatches) && !(titleMatches && (artistMatches || durationMatches))) {
         return null;
     }
     return data.id as string;
