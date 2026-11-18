@@ -15,6 +15,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: "Expected a search query of 1 to 120 characters" }, { status: 400 });
     }
 
+    let upstream = "token-provider";
     try {
         const tokenUrl = process.env.MUSICKIT_TOKEN_URL;
         if (!tokenUrl) throw new Error("MusicKit token provider unavailable");
@@ -23,15 +24,21 @@ export async function GET(request: NextRequest) {
         const { token_string: token } = await tokenResponse.json();
         if (typeof token !== "string" || !token) throw new Error("MusicKit token unavailable");
 
+        upstream = "apple-music";
         const params = new URLSearchParams({ term: query, types: "songs", limit: "1", l: "ko" });
         const response = await fetch(`https://api.music.apple.com/v1/catalog/kr/search?${params}`, {
-            headers: { Authorization: `Bearer ${token}` },
+            headers: {
+                Authorization: `Bearer ${token}`,
+                Origin: "https://beta.music.apple.com",
+                Referer: "https://music.apple.com/",
+            },
             signal: AbortSignal.timeout(5000),
         });
-        if (!response.ok) throw new Error("Apple Music search failed");
+        if (!response.ok) throw new Error(`Apple Music search failed (${response.status})`);
         const { results } = await response.json();
         const song: Song | undefined = results?.songs?.data?.[0]?.attributes;
 
+        upstream = "youtube-search";
         let videoId: string | null = null;
         if (song && song.durationInMillis > 0 && song.durationInMillis <= 720_000) {
             if (song.isrc) videoId = await searchVideo(song.isrc, song);
@@ -46,8 +53,9 @@ export async function GET(request: NextRequest) {
             seconds: Math.ceil(song.durationInMillis / 1000),
         } : null;
         return NextResponse.json({ data }, { headers: { "Cache-Control": publicCache } });
-    } catch {
-        return NextResponse.json({ error: "Music search unavailable" }, { status: 502 });
+    } catch (error) {
+        console.warn("Music catalog search failed", upstream, error instanceof Error ? error.message : "Unknown error");
+        return NextResponse.json({ error: "Music search unavailable", upstream }, { status: 502 });
     }
 }
 
